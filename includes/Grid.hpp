@@ -6,14 +6,38 @@
 
 #include <utility>
 #include "../includes/Tile.hpp"
+#include <algorithm>               
+#include <boost/graph/graph_traits.hpp>
+#include <boost/graph/adjacency_list.hpp>
+#include <boost/graph/dijkstra_shortest_paths.hpp>
 
 /**
  * @brief PVector2Grid is a Vector used in the pacman grids.
  * 
- * the first value is used to initialize the row, and the second for the columns.w
+ * the first value is used to initialize the row, and the second for the columns.
  * 
  */
 typedef std::pair<int, int> PVector2Grid;
+
+/**
+ * @brief define PNode type, used as Node in a pacman Graph (PGraph).
+ * 
+ * the first value is used to initialize the row, and the second for the columns.
+ * 
+ */
+typedef std::pair<int, int> PNode;
+
+/**
+ * @brief define PGraph type, used to get a path between two points in a map.
+ * 
+ */
+typedef boost::adjacency_list<PNode, PNode, int> PGraph;
+
+/**
+ * @brief define an iterator of edge for a PGraph
+ * 
+ */
+typedef boost::graph_traits<PGraph>::edge_iterator PEdgeIterator;
 
 /**
  * @brief Grid class, store the datas in matrix (normalGrid, and pacGumGrid). 
@@ -98,6 +122,7 @@ private:
      * 
      */
     Tile m_grid[GRID_HEIGHT][GRID_WIDTH];
+    PGraph m_gridGraph;
 
 };
 
