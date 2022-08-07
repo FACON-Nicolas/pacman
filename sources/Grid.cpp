@@ -67,3 +67,16 @@ void Grid::initializeMainGrid() {
         for (int j = 0; j < GRID_WIDTH; j++)
             m_grid[i][j] = Tile(grid[i][j]);
 }
+
+int Grid::convertRowColumnToNodeValue(PVector2Grid position) {
+    if (position.first < 0 || position.first >= GRID_HEIGHT || position.second < 0 || position.second >= GRID_WIDTH)
+        throw invalid_argument("index out of range");
+    return position.first * ROW_VALUE + position.second * COLUMN_VALUE;
+}
+
+PVector2Grid Grid::convertNodeValueToVector2Grid(int value) {
+    PVector2Grid position;
+    position.first = value / 1000;
+    position.second = value - position.first;
+    return position;
+}
