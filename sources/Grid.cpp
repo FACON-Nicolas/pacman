@@ -63,8 +63,7 @@ void Grid::initializeMainGrid() {
         {12, 5, 5, 5, 5, 5, 5, 5, 5, 4, 5, 4, 5, 5, 5, 5, 5, 5, 5, 5, 6},
     };
 
-    for (int i = 0; i < GRID_HEIGHT; i++) {
+    for (int i = 0; i < GRID_HEIGHT; i++)
         for (int j = 0; j < GRID_WIDTH; j++)
             m_grid[i][j] = Tile(grid[i][j]);
-    }
 }
