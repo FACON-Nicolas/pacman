@@ -4,7 +4,7 @@
 #define GRID_WIDTH 21
 #define GRID_HEIGHT 20
 
-#define LINE_VALUE 1000
+#define ROW_VALUE 1000
 #define COLUMN_VALUE 1
 
 #include <utility>
@@ -39,6 +39,12 @@ typedef boost::adjacency_list<boost::listS, boost::vecS, boost::undirectedS, boo
  * 
  */
 typedef boost::graph_traits<PGraph>::edge_iterator PEdgeIterator;
+
+/**
+ * @brief Pacman Vector2 (PVector2) is a vector2 (x, y) used to know for example a player position.
+ * 
+ */
+typedef std::pair<double, double> PVector2;
 
 /**
  * @brief Grid class, store the datas in matrix (normalGrid, and pacGumGrid). 
@@ -97,6 +103,31 @@ public:
      * @return false if the wall is not present
      */
     bool isWallPresent(PVector2Grid position, Wall wall);
+
+    /**
+     * @brief convert PVector2Grid to int.
+     * 
+     * example : PVector2Grid(3, 17) => row * ROW_VALUE + col * COLUMN_VALUE => 3 * 1000 + 17 * 1 => 3017.
+     * 
+     * @param position PVector2Grid with the row and column to convert
+     * 
+     * @return int PVector2Grid converted to Grid.
+     */
+    int convertRowColumnToNodeValue(PVector2Grid position);
+
+    /**
+     * @brief Convert int to PVector2Grid.
+     * 
+     * Example :    3017    => (x, y) 
+     *              x       => 3017 / 1000 => 3
+     *              y       => 3017 - x => 17
+     *              3017    => (3, 17)
+     *  
+     * @param value value to convert in PVector2Grid
+     * 
+     * @return PVector2Grid value converted in PVector2Grid
+     */
+    PVector2Grid convertNodeValueToVector2Grid(int value);
     
 private:
 
