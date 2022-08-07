@@ -1,7 +1,6 @@
 #ifndef DIRECTION_HPP
 #define DIRECTION_HPP
 
-
 /**
  * @brief Direction enum, used to choice a direction
  * for players and AIs.
@@ -13,10 +12,30 @@
  */
 enum class Direction : int {
 
+    /**
+     * @brief top value
+     * 
+     */
     TOP = 1,
+
+    /**
+     * @brief right value
+     * 
+     */
     RIGHT = 2,
+
+    /**
+     * @brief bottom value
+     * 
+     */
     BOTTOM = 4,
+
+    /**
+     * @brief left value
+     * 
+     */
     LEFT = 8
+    
 };
 
 #endif //DIRECTION_HPP
