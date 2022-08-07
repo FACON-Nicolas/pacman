@@ -3,6 +3,16 @@
 This repository is composed by a source code of pacman in C++. the project is currently in development.
 
 # Summary
+
+* **[Summary](#summary)**
+* **[Credits](#credits)**
+* **[Features](#features)**
+* **[Install](#install)**
+* **[Pre-requisites](#pre-requisites)**
+* **[Releases](#releases)**
+* **[Inputs](#inputs)**
+* **[Versions](#versions)**
+
 # Credits
 
  * **[FACON Nicolas](github.com/FACON-Nicolas)** : developer and creator of the project.
