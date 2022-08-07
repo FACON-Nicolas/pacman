@@ -40,7 +40,7 @@ public:
      * 
      * @param position position in PVector2Grid (row, col)
      */
-    void get(PVector2Grid position) const;
+    int get(PVector2Grid position) const;
 
     /**
      * @brief setter to set the tile value in a specific row and a specific column.
@@ -97,7 +97,7 @@ private:
      * @brief main grid.
      * 
      */
-    Tile grid[GRID_HEIGHT][GRID_WIDTH];
+    Tile m_grid[GRID_HEIGHT][GRID_WIDTH];
 
 };
 
