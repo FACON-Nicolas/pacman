@@ -4,6 +4,9 @@
 #define GRID_WIDTH 21
 #define GRID_HEIGHT 20
 
+#define LINE_VALUE 1000
+#define COLUMN_VALUE 1
+
 #include <utility>
 #include "../includes/Tile.hpp"
 #include <algorithm>               
@@ -20,18 +23,16 @@
 typedef std::pair<int, int> PVector2Grid;
 
 /**
- * @brief define PNode type, used as Node in a pacman Graph (PGraph).
- * 
- * the first value is used to initialize the row, and the second for the columns.
+ * @brief Property used to define Edge Weight.
  * 
  */
-typedef std::pair<int, int> PNode;
+typedef boost::property<boost::edge_weight_t, double> PEdgeWeight;
 
 /**
  * @brief define PGraph type, used to get a path between two points in a map.
  * 
  */
-typedef boost::adjacency_list<PNode, PNode, int> PGraph;
+typedef boost::adjacency_list<boost::listS, boost::vecS, boost::undirectedS, boost::no_property, PEdgeWeight> PGraph;
 
 /**
  * @brief define an iterator of edge for a PGraph
@@ -122,6 +123,11 @@ private:
      * 
      */
     Tile m_grid[GRID_HEIGHT][GRID_WIDTH];
+
+    /**
+     * @brief grid used as PGraph to get paths for AIs
+     * 
+     */
     PGraph m_gridGraph;
 
 };
