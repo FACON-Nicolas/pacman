@@ -135,7 +135,28 @@ public:
      */
     static PVector2Grid convertNodeValueToVector2Grid(int value);
 
-    static int getNumberOfNodesToConvertGridInGraph(Grid grid);
+    /**
+     * @brief check if a position is a node.
+     * 
+     * in our grid system, if a tile value is 5 or 10, then it can't be a node (because its shape is __ or |  |), but
+     * if its value is different than 5 and 10, if the pac gum value is EMPTY at the same point, it can't be a node.
+     * 
+     * @param position grid position (row, column)
+     * 
+     * @return true if the case is a node
+     * @return false if the case is not a node.
+     */
+    bool isNode(PVector2Grid position);
+
+    /**
+     * @brief Get the Number Of Nodes In Grid.
+     *                                                                                               __
+     * in our grid system, if a tile value is 5 or 10, then it can't be a node (because its shape is __ or |  |), but
+     * if its value is different than 5 and 10, if the pac gum value is EMPTY at the same point, it can't be a node.
+     * 
+     * @return int the number of nodes
+     */
+    int getNumberOfNodesInGrid();
     
 private:
 
@@ -169,6 +190,10 @@ private:
      */
     PGraph m_gridGraph;
 
+    /**
+     * @brief pacGum Grid, used to know the bonus presents in the map.
+     * 
+     */
     PacGum m_pacGumGrid[GRID_HEIGHT][GRID_WIDTH];
 
 };

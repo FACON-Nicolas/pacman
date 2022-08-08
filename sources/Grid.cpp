@@ -124,14 +124,19 @@ PVector2Grid Grid::convertNodeValueToVector2Grid(int value) {
     return position;
 }
 
-int Grid::getNumberOfNodesToConvertGridInGraph(Grid grid) {
+bool Grid::isNode(PVector2Grid position) {
+    int row = position.first, col = position.second;
+    if (row < 0 || row >= GRID_HEIGHT || col < 0 || col >= GRID_WIDTH)
+        throw invalid_argument("row or column out of range");
+    int tileValue = get(position);
+    return ((tileValue % 5 != 0 || tileValue == 0) && getPacGum(position) != PacGum::EMPTY);
+}
+
+int Grid::getNumberOfNodesInGrid() {
     int number = 0;
     for (int i=0; i < GRID_HEIGHT; i++)
-        for (int j = 0; j < GRID_WIDTH; j++) {
-            PVector2Grid pos(i, j);
-            int tileValue = grid.get(pos);
-            if ((tileValue % 5 != 0 || tileValue == 0) && grid.getPacGum(pos) != PacGum::EMPTY)
+        for (int j = 0; j < GRID_WIDTH; j++) 
+            if (isNode(PVector2Grid(i, j)))
                 number++;
-        }
     return number;
 }
