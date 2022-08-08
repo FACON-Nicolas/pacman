@@ -5,6 +5,10 @@ Grid::Grid() {
     initializeGrids();
 }
 
+Grid::~Grid() {
+    delete m_graph;
+}
+
 void Grid::initializeGrids() {
     initializeMainGrid();
 }
@@ -133,10 +137,14 @@ bool Grid::isNode(PVector2Grid position) {
 }
 
 int Grid::getNumberOfNodesInGrid() {
-    int number = 0;
+    return static_cast<int>(getNodesValues().size());
+}
+
+vector<PVector2Grid> Grid::getNodesValues() {
+    vector<PVector2Grid> nodes;
     for (int i=0; i < GRID_HEIGHT; i++)
-        for (int j = 0; j < GRID_WIDTH; j++) 
+        for (int j = 0; j < GRID_WIDTH; j++)
             if (isNode(PVector2Grid(i, j)))
-                number++;
-    return number;
+                nodes.push_back(PVector2Grid(i, j));
+    return nodes;
 }

@@ -63,6 +63,14 @@ public:
     Grid();
 
     /**
+     * @brief Destroy the Grid object.
+     * 
+     * destroy the m_graph, declared in ptr.
+     * 
+     */
+    ~Grid();
+
+    /**
      * @brief method used to initialize the grids.
      * 
      */
@@ -157,6 +165,13 @@ public:
      * @return int the number of nodes
      */
     int getNumberOfNodesInGrid();
+
+    /**
+     * @brief return a container of nodes position.
+     * 
+     * @return std::vector<PVector2Grid>  vector of nodes position
+     */
+    std::vector<PVector2Grid> getNodesValues();
     
 private:
 
@@ -170,7 +185,7 @@ private:
      * @brief converts the main grid in a graph.
      * 
      */
-    void initializeGraphGrid();
+    void initializeGraph();
 
     /**
      * @brief initialize the grid with the pacGum values.
@@ -188,7 +203,7 @@ private:
      * @brief grid used as PGraph to get paths for AIs
      * 
      */
-    PGraph m_gridGraph;
+    PGraph* m_graph;
 
     /**
      * @brief pacGum Grid, used to know the bonus presents in the map.
