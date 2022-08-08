@@ -8,11 +8,13 @@
 #define COLUMN_VALUE 1
 
 #include <utility>
-#include "../includes/Tile.hpp"
 #include <algorithm>               
 #include <boost/graph/graph_traits.hpp>
 #include <boost/graph/adjacency_list.hpp>
 #include <boost/graph/dijkstra_shortest_paths.hpp>
+
+#include "../includes/Tile.hpp"
+#include "../includes/PacGum.hpp"
 
 /**
  * @brief PVector2Grid is a Vector used in the pacman grids.
@@ -82,6 +84,10 @@ public:
      */
     void set(PVector2Grid position, int value);
 
+    PacGum getPacGum(PVector2Grid position);
+
+    void setPacGum(PVector2Grid position, PacGum pacGumValue);
+
     /**
      * @brief convert m_value of a specific tile in a reversed array binary
      * 
@@ -128,6 +134,8 @@ public:
      * @return PVector2Grid value converted in PVector2Grid
      */
     static PVector2Grid convertNodeValueToVector2Grid(int value);
+
+    static int getNumberOfNodesToConvertGridInGraph(Grid grid);
     
 private:
 
@@ -160,6 +168,8 @@ private:
      * 
      */
     PGraph m_gridGraph;
+
+    PacGum m_pacGumGrid[GRID_HEIGHT][GRID_WIDTH];
 
 };
 

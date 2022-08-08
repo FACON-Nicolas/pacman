@@ -23,6 +23,20 @@ void Grid::set(PVector2Grid position, int value) {
     m_grid[row][col].set(value);
 }
 
+PacGum Grid::getPacGum(PVector2Grid position) {
+    int row = position.first, col = position.second;
+    if (row < 0 || row >= GRID_HEIGHT || col < 0 || col >= GRID_WIDTH)
+        throw invalid_argument("row or column out of range");
+    return m_pacGumGrid[row][col];
+}
+
+void Grid::setPacGum(PVector2Grid position, PacGum pacGumValue) {
+    int row = position.first, col = position.second;
+    if (row < 0 || row >= GRID_HEIGHT || col < 0 || col >= GRID_WIDTH)
+        throw invalid_argument("row or column out of range");
+    m_pacGumGrid[row][col] = pacGumValue;
+}
+
 int* Grid::wallToBin(PVector2Grid position) {
     int row = position.first, col = position.second;
     if (row < 0 || row >= GRID_HEIGHT || col < 0 || col >= GRID_WIDTH)
@@ -68,6 +82,35 @@ void Grid::initializeMainGrid() {
             m_grid[i][j] = Tile(grid[i][j]);
 }
 
+void Grid::initializePacGumGrid() {
+    int pacGumGrid[GRID_HEIGHT][GRID_WIDTH] = {
+                    {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
+                    {1, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 1},
+                    {2, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 2},
+                    {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
+                    {1, 0, 0, 0, 1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 1, 0, 1, 0, 0, 0, 1},
+                    {1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 0, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1},
+                    {0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0},
+                    {0, 0, 0, 0, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 0, 0, 0, 0},
+                    {0, 0, 0, 0, 1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 1, 0, 1, 0, 0, 0, 0},
+                    {1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1},
+                    {0, 0, 0, 0, 1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 1, 0, 1, 0, 0, 0, 0},
+                    {0, 0, 0, 0, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 0, 0, 0, 0},
+                    {0, 0, 0, 0, 1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 1, 0, 1, 0, 0, 0, 0},
+                    {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
+                    {1, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 1},
+                    {2, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 2},
+                    {0, 0, 1, 0, 1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 1, 0, 1, 0, 1, 0, 0},
+                    {1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 0, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1},
+                    {1, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1},
+                    {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1}
+    };
+
+    for (int i = 0; i < GRID_HEIGHT; i++)
+        for (int j = 0; j < GRID_WIDTH; j++)
+            m_pacGumGrid[i][j] = static_cast<PacGum>(pacGumGrid[i][j]);
+}
+
 int Grid::convertRowColumnToNodeValue(PVector2Grid position) {
     if (position.first < 0 || position.first >= GRID_HEIGHT || position.second < 0 || position.second >= GRID_WIDTH)
         throw invalid_argument("index out of range");
@@ -79,4 +122,16 @@ PVector2Grid Grid::convertNodeValueToVector2Grid(int value) {
     position.first = value / 1000;
     position.second = value - position.first;
     return position;
+}
+
+int Grid::getNumberOfNodesToConvertGridInGraph(Grid grid) {
+    int number = 0;
+    for (int i=0; i < GRID_HEIGHT; i++)
+        for (int j = 0; j < GRID_WIDTH; j++) {
+            PVector2Grid pos(i, j);
+            int tileValue = grid.get(pos);
+            if ((tileValue % 5 != 0 || tileValue == 0) && grid.getPacGum(pos) != PacGum::EMPTY)
+                number++;
+        }
+    return number;
 }
