@@ -113,7 +113,7 @@ public:
      * 
      * @return int PVector2Grid converted to Grid.
      */
-    int convertRowColumnToNodeValue(PVector2Grid position);
+    static int convertRowColumnToNodeValue(PVector2Grid position);
 
     /**
      * @brief Convert int to PVector2Grid.
@@ -127,7 +127,7 @@ public:
      * 
      * @return PVector2Grid value converted in PVector2Grid
      */
-    PVector2Grid convertNodeValueToVector2Grid(int value);
+    static PVector2Grid convertNodeValueToVector2Grid(int value);
     
 private:
 
