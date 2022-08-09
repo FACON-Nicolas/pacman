@@ -8,6 +8,7 @@
 #define COLUMN_VALUE 1
 
 #include <utility>
+#include <iostream>
 #include <algorithm>               
 #include <boost/graph/graph_traits.hpp>
 #include <boost/graph/adjacency_list.hpp>
@@ -190,6 +191,15 @@ public:
      * @return std::vector<PVector2Grid> a nodes or two nodes.
      */
     std::vector<PVector2Grid> verticalNodesNeighbors(PVector2Grid position);
+
+    /**
+     * @brief from a position, get the neighbors
+     * 
+     * @param position current node position
+     * 
+     * @return std::vector<PVector2Grid> all nodes neighbors from this position.
+     */
+    std::vector<PVector2Grid> nodesNeighbors(PVector2Grid position);
     
 private:
 

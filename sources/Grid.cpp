@@ -11,6 +11,7 @@ Grid::~Grid() {
 
 void Grid::initializeGrids() {
     initializeMainGrid();
+    initializePacGumGrid();
 }
 
 int Grid::get(PVector2Grid position) const {
@@ -170,7 +171,7 @@ vector<PVector2Grid> Grid::horizontalNodesNeighbors(PVector2Grid position) {
 }
 
 vector<PVector2Grid> Grid::verticalNodesNeighbors(PVector2Grid position) {
-        int row(position.first), column(position.second);
+    int row(position.first), column(position.second);
     vector<PVector2Grid> nodesPosition;
     if (!isWallPresent(position, Wall::TOP)) {
         do {
@@ -179,7 +180,7 @@ vector<PVector2Grid> Grid::verticalNodesNeighbors(PVector2Grid position) {
         nodesPosition.push_back(PVector2Grid(row, column));
     }
 
-    column = position.second;
+    row = position.first;
 
     if (!isWallPresent(position, Wall::BOTTOM)) {
         do {
@@ -187,4 +188,12 @@ vector<PVector2Grid> Grid::verticalNodesNeighbors(PVector2Grid position) {
         } while(!isNode(PVector2Grid(row, column)));
         nodesPosition.push_back(PVector2Grid(row, column));
     } return nodesPosition;
+}
+
+vector<PVector2Grid> Grid::nodesNeighbors(PVector2Grid position) {
+    vector<PVector2Grid> neighbors = horizontalNodesNeighbors(position);
+    vector<PVector2Grid> v = verticalNodesNeighbors(position);
+    for (vector<PVector2Grid>::iterator it = v.begin(); it != v.end(); it++)
+        neighbors.push_back(*it);
+    return neighbors;
 }
