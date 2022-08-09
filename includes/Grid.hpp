@@ -176,6 +176,24 @@ public:
 private:
 
     /**
+     * @brief from a position, get the neighbors to the right and to the left.
+     * 
+     * @param position current node position
+     * 
+     * @return std::vector<PVector2Grid> a nodes or two nodes.
+     */
+    std::vector<PVector2Grid> horizontalNodesNeighbors(PVector2Grid position);
+
+    /**
+     * @brief from a position, get the neighbors to the top and to the bottom
+     * 
+     * @param position current node position
+     * 
+     * @return std::vector<PVector2Grid> a nodes or two nodes.
+     */
+    std::vector<PVector2Grid> verticalNodesNeighbors(PVector2Grid position);
+
+    /**
      * @brief initialize main grid
      * 
      */
