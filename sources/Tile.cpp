@@ -1,4 +1,5 @@
 #include "../includes/Tile.hpp"
+using namespace std;
 
 bool Tile::operator==(Tile const& tile) const {
     return get() == tile.get();
@@ -32,17 +33,17 @@ void Tile::set(int value) {
     this->m_value = value;
 }
 
-int* Tile::wallToBin() {
+vector<int> Tile::wallToBin() {
     int value = get();
-    int walls[4];
+    vector<int> walls;
     for (int i = 0; i < 4; i++) {
-        walls[i] = value%2;
+        walls.push_back(value%2);
         value /= 2;
     } return walls;
 }
 
 bool Tile::isWallPresent(Wall wall) {
-    int* walls = wallToBin();
+    vector<int> walls = wallToBin();
     int w = static_cast<int>(wall);
     for (int i = 0; i < 4; i++)
         if (walls[i]*pow(2, i) == w)

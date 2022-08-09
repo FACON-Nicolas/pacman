@@ -3,6 +3,7 @@
 
 #include "Wall.hpp"
 #include <stdexcept>
+#include <vector>
 #include <cmath>
 #define TILE_SIZE 45
 
@@ -120,9 +121,9 @@ public:
      * 
      * example : m_value = 8 -> 0b1000 -> [0,0,0,1]
      * 
-     * @return int* int[4] in reversed binary.
+     * @return vector<int> reversed binary.
      */
-    int* wallToBin();
+    std::vector<int> wallToBin();
 
     /**
      * @brief check if a number 
