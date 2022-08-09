@@ -93,8 +93,22 @@ public:
      */
     void set(PVector2Grid position, int value);
 
+    /**
+     * @brief Get the Pac Gum object at a position given in argument.
+     * 
+     * @param position pacgum position given in argument.
+     * 
+     * @return PacGum in this position.
+     */
     PacGum getPacGum(PVector2Grid position);
 
+    /**
+     * @brief Set the Pac Gum object at a position given in argument.
+     * 
+     * @param position position given in argument.
+     * 
+     * @param pacGumValue new pacgum value
+     */
     void setPacGum(PVector2Grid position, PacGum pacGumValue);
 
     /**
