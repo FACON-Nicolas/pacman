@@ -6,7 +6,7 @@ Grid::Grid() {
 }
 
 Grid::~Grid() {
-    delete m_graph;
+
 }
 
 void Grid::initializeGrids() {
@@ -41,7 +41,7 @@ void Grid::setPacGum(PVector2Grid position, PacGum pacGumValue) {
     m_pacGumGrid[row][col] = pacGumValue;
 }
 
-int* Grid::wallToBin(PVector2Grid position) {
+vector<int> Grid::wallToBin(PVector2Grid position) {
     int row = position.first, col = position.second;
     if (row < 0 || row >= GRID_HEIGHT || col < 0 || col >= GRID_WIDTH)
         throw invalid_argument("row or column out of range");

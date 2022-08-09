@@ -103,7 +103,7 @@ public:
      * 
      * @return int* the array
      */
-    int* wallToBin(PVector2Grid position);
+    std::vector<int> wallToBin(PVector2Grid position);
 
     /**
      * @brief check if a specific wall is present in a tile value
@@ -172,8 +172,6 @@ public:
      * @return std::vector<PVector2Grid>  vector of nodes position
      */
     std::vector<PVector2Grid> getNodesValues();
-    
-private:
 
     /**
      * @brief from a position, get the neighbors to the right and to the left.
@@ -192,6 +190,8 @@ private:
      * @return std::vector<PVector2Grid> a nodes or two nodes.
      */
     std::vector<PVector2Grid> verticalNodesNeighbors(PVector2Grid position);
+    
+private:
 
     /**
      * @brief initialize main grid
@@ -221,7 +221,7 @@ private:
      * @brief grid used as PGraph to get paths for AIs
      * 
      */
-    PGraph* m_graph;
+    PGraph m_graph;
 
     /**
      * @brief pacGum Grid, used to know the bonus presents in the map.
