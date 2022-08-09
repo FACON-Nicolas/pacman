@@ -116,6 +116,10 @@ void Grid::initializePacGumGrid() {
             m_pacGumGrid[i][j] = static_cast<PacGum>(pacGumGrid[i][j]);
 }
 
+void Grid::initializeGraph() {
+    m_graph = PGraph(getNumberOfNodesInGrid());
+}
+
 int Grid::convertRowColumnToNodeValue(PVector2Grid position) {
     if (position.first < 0 || position.first >= GRID_HEIGHT || position.second < 0 || position.second >= GRID_WIDTH)
         throw invalid_argument("index out of range");

@@ -26,6 +26,12 @@
 typedef std::pair<int, int> PVector2Grid;
 
 /**
+ * @brief use as edge in PGraph
+ * 
+ */
+typedef std::pair<int, int> PEdge;
+
+/**
  * @brief Property used to define Edge Weight.
  * 
  */
@@ -42,6 +48,12 @@ typedef boost::adjacency_list<boost::listS, boost::vecS, boost::undirectedS, boo
  * 
  */
 typedef boost::graph_traits<PGraph>::edge_iterator PEdgeIterator;
+
+/**
+ * @brief use as vertex descriptor in PGraph.
+ * 
+ */
+typedef boost::graph_traits<PGraph>::vertex_descriptor PVertexDescriptor;
 
 /**
  * @brief Pacman Vector2 (PVector2) is a vector2 (x, y) used to know for example a player position.
