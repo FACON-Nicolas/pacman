@@ -148,3 +148,43 @@ vector<PVector2Grid> Grid::getNodesValues() {
                 nodes.push_back(PVector2Grid(i, j));
     return nodes;
 }
+
+vector<PVector2Grid> Grid::horizontalNodesNeighbors(PVector2Grid position) {
+    int row(position.first), column(position.second);
+    vector<PVector2Grid> nodesPosition;
+    if (!isWallPresent(position, Wall::LEFT)) {
+        do {
+            column--;
+        } while(!isNode(PVector2Grid(row, column)));
+        nodesPosition.push_back(PVector2Grid(row, column));
+    }
+
+    column = position.second;
+
+    if (!isWallPresent(position, Wall::RIGHT)) {
+        do {
+            column++;
+        } while(!isNode(PVector2Grid(row, column)));
+        nodesPosition.push_back(PVector2Grid(row, column));
+    } return nodesPosition;
+}
+
+vector<PVector2Grid> Grid::verticalNodesNeighbors(PVector2Grid position) {
+        int row(position.first), column(position.second);
+    vector<PVector2Grid> nodesPosition;
+    if (!isWallPresent(position, Wall::TOP)) {
+        do {
+            row--;
+        } while(!isNode(PVector2Grid(row, column)));
+        nodesPosition.push_back(PVector2Grid(row, column));
+    }
+
+    column = position.second;
+
+    if (!isWallPresent(position, Wall::BOTTOM)) {
+        do {
+            row++;
+        } while(!isNode(PVector2Grid(row, column)));
+        nodesPosition.push_back(PVector2Grid(row, column));
+    } return nodesPosition;
+}
