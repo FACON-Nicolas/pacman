@@ -226,6 +226,19 @@ public:
      * @return std::vector<PVector2Grid> all nodes neighbors from this position.
      */
     std::vector<PVector2Grid> nodesNeighbors(PVector2Grid position);
+
+    /**
+     * @brief Get the Weight Between Neighbors
+     * 
+     * to get the weight, the methods get the absolute value on dt a -> b. 
+     * 
+     * @param a First node position
+     * 
+     * @param b second node position
+     * 
+     * @return int weight between nodes.
+     */
+    int getWeightBetweenNeighbors(PVector2Grid a, PVector2Grid b);
     
 private:
 
