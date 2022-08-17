@@ -32,22 +32,11 @@ typedef std::pair<int, int> PVector2Grid;
 typedef std::pair<int, int> PEdge;
 
 /**
- * @brief Property used to define Edge Weight.
- * 
- */
-typedef boost::property<boost::edge_weight_t, double> PEdgeWeight;
-
-/**
  * @brief define PGraph type, used to get a path between two points in a map.
  * 
  */
-typedef boost::adjacency_list<boost::listS, boost::vecS, boost::undirectedS, boost::no_property, PEdgeWeight> PGraph;
+boost::adjacency_list <boost::listS, boost::vecS, boost::UndirectedS, boost::no_property, boost::property<boost::edge_weight_t, int>> PGraph;
 
-/**
- * @brief define an iterator of edge for a PGraph
- * 
- */
-typedef boost::graph_traits<PGraph>::edge_iterator PEdgeIterator;
 
 /**
  * @brief use as vertex descriptor in PGraph.

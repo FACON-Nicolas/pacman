@@ -138,7 +138,7 @@ vector<PEdge> Grid::edgesValues() {
 void Grid::initializeGraph() {
     int numberOfNodes = getNumberOfNodesInGrid();
 
-    m_graph = PGraph(numberOfNodes);
+    m_graph = PGraph;
 
     int nodeValues[numberOfNodes];
     for (int i  = 0; i < numberOfNodes; i++)
