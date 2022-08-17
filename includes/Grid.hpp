@@ -154,7 +154,7 @@ public:
      * 
      * @return int PVector2Grid converted to Grid.
      */
-    static int convertRowColumnToNodeValue(PVector2Grid position);
+    static int convertPV2(PVector2Grid position);
 
     /**
      * @brief Convert int to PVector2Grid.
@@ -168,7 +168,7 @@ public:
      * 
      * @return PVector2Grid value converted in PVector2Grid
      */
-    static PVector2Grid convertNodeValueToVector2Grid(int value);
+    static PVector2Grid convertNode(int value);
 
     /**
      * @brief check if a position is a node.
@@ -194,11 +194,13 @@ public:
     int getNumberOfNodesInGrid();
 
     /**
-     * @brief return a container of nodes position.
+     * @brief return a container of nodes values.
      * 
-     * @return std::vector<PVector2Grid>  vector of nodes position
+     * @return vector<int> array of nodes
      */
-    std::vector<PVector2Grid> getNodesValues();
+    std::vector<int> getNodesValues();
+
+    std::vector<PEdge> edgesValues();
 
     /**
      * @brief from a position, get the neighbors to the right and to the left.
@@ -277,6 +279,7 @@ private:
      * 
      */
     PacGum m_pacGumGrid[GRID_HEIGHT][GRID_WIDTH];
+    
 
 };
 

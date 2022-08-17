@@ -51,8 +51,9 @@ vector<int> Grid::wallToBin(PVector2Grid position) {
 
 bool Grid::isWallPresent(PVector2Grid position, Wall wall) {
     int row = position.first, col = position.second;
-    if (row < 0 || row >= GRID_HEIGHT || col < 0 || col >= GRID_WIDTH)
+    if (row < 0 || row >= GRID_HEIGHT || col < 0 || col >= GRID_WIDTH) {
         throw invalid_argument("row or column out of range");
+    }
     return m_grid[row][col].isWallPresent(wall);
 }
 
@@ -67,7 +68,7 @@ void Grid::initializeMainGrid() {
         {10, 13, 5, 7, 10, 11, 10, 13, 5, 5, 1, 5, 5, 7, 10, 11, 10, 13, 5, 7, 10},
         {12, 5, 5, 5, 2, 10, 12, 5, 5, 3, 10, 9, 5, 5, 6, 10, 8, 5, 5, 5, 6},
         {1, 1, 1, 3, 10, 8, 5, 5, 7, 10, 14, 10, 13, 5, 5, 2, 10, 9, 1, 1, 1},
-        {0, 0, 0, 2, 10, 10, 9, 5, 5, 4, 1, 4, 5, 5, 3, 10, 10, 8, 0, 0, 0},
+        {0, 0, 0, 2, 10, 10, 9, 5, 5, 4, 5, 4, 5, 5, 3, 10, 10, 8, 0, 0, 0},
         {4, 4, 4, 6, 10, 14, 10, 9, 1, 1, 0, 1, 1, 3, 10, 14, 10, 12, 4, 4, 4},
         {5, 5, 5, 5, 0, 5, 2, 8, 0, 0, 0, 0, 0, 2, 8, 5, 0, 5, 5, 5, 5},
         {1, 1, 1, 3, 10, 11, 10, 12, 4, 4, 4, 4, 4, 6, 10, 11, 10, 9, 1, 1, 1},
@@ -116,51 +117,99 @@ void Grid::initializePacGumGrid() {
             m_pacGumGrid[i][j] = static_cast<PacGum>(pacGumGrid[i][j]);
 }
 
-void Grid::initializeGraph() {
-    m_graph = PGraph(getNumberOfNodesInGrid());
+int Grid::getWeightBetweenNeighbors(PVector2Grid a, PVector2Grid b) {
+    auto neighbors = nodesNeighbors(a);
+    if (find(neighbors.begin(), neighbors.end(), b) == neighbors.end())
+        throw invalid_argument("a and b are not neighbors.");
+    return abs((a.first == b.first) ? a.second - b.second : a.first - b.first);
 }
 
-int Grid::convertRowColumnToNodeValue(PVector2Grid position) {
+vector<PEdge> Grid::edgesValues() {
+    vector<PEdge> edges;
+    for (auto n : getNodesValues()) {
+        for (auto neighbor : nodesNeighbors(convertNode(n))) {
+            PEdge e(n, convertPV2(neighbor));
+            edges.push_back(e);
+        }
+    }
+    return edges;
+}
+
+void Grid::initializeGraph() {
+    int numberOfNodes = getNumberOfNodesInGrid();
+
+    m_graph = PGraph(numberOfNodes);
+
+    int nodeValues[numberOfNodes];
+    for (int i  = 0; i < numberOfNodes; i++)
+        nodeValues[i] = getNodesValues()[i];
+
+    // TODO: define this on array
+    PEdge edgesValues;
+
+    vector<int> nodeUsed;
+
+    for (int node : nodeValues) {
+        PVector2Grid start = convertNode(node);
+        vector<PVector2Grid> neighbors = nodesNeighbors(start);
+        for (PVector2Grid end : neighbors)
+            if (find(nodeUsed.begin(), nodeUsed.end(), convertPV2(end)) == nodeUsed.end()) {
+                cout << "caca" << endl;
+            }
+    }
+}
+
+int Grid::convertPV2(PVector2Grid position) {
     if (position.first < 0 || position.first >= GRID_HEIGHT || position.second < 0 || position.second >= GRID_WIDTH)
         throw invalid_argument("index out of range");
+    cout << position.first << " " << position.second << " = " << position.first * ROW_VALUE + position.second * COLUMN_VALUE << endl;
     return position.first * ROW_VALUE + position.second * COLUMN_VALUE;
 }
 
-PVector2Grid Grid::convertNodeValueToVector2Grid(int value) {
+PVector2Grid Grid::convertNode(int value) {
     PVector2Grid position;
     position.first = value / 1000;
-    position.second = value - position.first;
+    position.second = value % 1000;
     return position;
 }
 
 bool Grid::isNode(PVector2Grid position) {
     int row = position.first, col = position.second;
-    if (row < 0 || row >= GRID_HEIGHT || col < 0 || col >= GRID_WIDTH)
+    if (row < 0 || row >= GRID_HEIGHT || col < 0 || col >= GRID_WIDTH) {
         throw invalid_argument("row or column out of range");
-    int tileValue = get(position);
+    } int tileValue = get(position);
     return ((tileValue % 5 != 0 || tileValue == 0) && getPacGum(position) != PacGum::EMPTY);
 }
 
 int Grid::getNumberOfNodesInGrid() {
-    return static_cast<int>(getNodesValues().size());
-}
-
-vector<PVector2Grid> Grid::getNodesValues() {
-    vector<PVector2Grid> nodes;
-    for (int i=0; i < GRID_HEIGHT; i++)
+    int nodes = 0;
+    for (int i = 0; i < GRID_HEIGHT; i++)
         for (int j = 0; j < GRID_WIDTH; j++)
             if (isNode(PVector2Grid(i, j)))
-                nodes.push_back(PVector2Grid(i, j));
+                nodes++;
+    return nodes;
+}
+
+vector<int> Grid::getNodesValues() {
+    vector<int> nodes;
+    for (int i=0; i < GRID_HEIGHT; i++)
+        for (int j = 0; j < GRID_WIDTH; j++)
+            if (isNode(PVector2Grid(i, j))) {
+                cout << i << " " << j << " = " << convertPV2(PVector2Grid(i, j)) << endl;
+                nodes.push_back(convertPV2(PVector2Grid(i, j)));
+            }
     return nodes;
 }
 
 vector<PVector2Grid> Grid::horizontalNodesNeighbors(PVector2Grid position) {
     int row(position.first), column(position.second);
     vector<PVector2Grid> nodesPosition;
+    cout << row << " " << column << endl;
     if (!isWallPresent(position, Wall::LEFT)) {
         do {
             column--;
-        } while(!isNode(PVector2Grid(row, column)));
+            if (column < 0) column = GRID_WIDTH-1;
+        } while(!isNode(PVector2Grid(row%=GRID_HEIGHT, column%=GRID_WIDTH)));
         nodesPosition.push_back(PVector2Grid(row, column));
     }
 
@@ -169,6 +218,7 @@ vector<PVector2Grid> Grid::horizontalNodesNeighbors(PVector2Grid position) {
     if (!isWallPresent(position, Wall::RIGHT)) {
         do {
             column++;
+            if (column >= GRID_WIDTH) column = 0;
         } while(!isNode(PVector2Grid(row, column)));
         nodesPosition.push_back(PVector2Grid(row, column));
     } return nodesPosition;
@@ -180,6 +230,7 @@ vector<PVector2Grid> Grid::verticalNodesNeighbors(PVector2Grid position) {
     if (!isWallPresent(position, Wall::TOP)) {
         do {
             row--;
+            if (row < 0) row = GRID_HEIGHT;
         } while(!isNode(PVector2Grid(row, column)));
         nodesPosition.push_back(PVector2Grid(row, column));
     }
@@ -189,6 +240,7 @@ vector<PVector2Grid> Grid::verticalNodesNeighbors(PVector2Grid position) {
     if (!isWallPresent(position, Wall::BOTTOM)) {
         do {
             row++;
+            if (row < 0) row = GRID_HEIGHT;
         } while(!isNode(PVector2Grid(row, column)));
         nodesPosition.push_back(PVector2Grid(row, column));
     } return nodesPosition;
