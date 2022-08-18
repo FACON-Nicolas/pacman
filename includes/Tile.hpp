@@ -5,7 +5,6 @@
 #include <stdexcept>
 #include <vector>
 #include <cmath>
-#define TILE_SIZE 45
 
 /**
  * @brief 

@@ -1,11 +1,6 @@
 #ifndef PACMAN_HPP
 #define PACMAN_HPP
 
-#define WINDOW_WIDTH    1600
-#define WINDOW_HEIGHT   901
-#define CASE_SIZE       45
-#define FRAME_RATE      60
-
 #include "SFML/Graphics.hpp"
 #include "../includes/Grid.hpp"
 

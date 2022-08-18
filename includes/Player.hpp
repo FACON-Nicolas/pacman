@@ -43,7 +43,7 @@ public:
      * 
      * @return false if x % CASE_SIZE != 0 or y % CASE_SIZE != 0
      */
-    bool isPerfectlyPositionnedOnCase();
+    bool isPerfectlyPositionned();
 
     /**
      * @brief Get the Current Animation object

@@ -1,12 +1,6 @@
 #ifndef GRID_HPP
 #define GRID_HPP
 
-#define GRID_WIDTH 21
-#define GRID_HEIGHT 20
-
-#define ROW_VALUE 1000
-#define COLUMN_VALUE 1
-
 #include <boost/config.hpp>
 #include <iostream>
 #include <fstream>

@@ -1,4 +1,5 @@
 #include "../includes/Tile.hpp"
+#include "../includes/Constant.hpp"
 using namespace std;
 
 bool Tile::operator==(Tile const& tile) const {
