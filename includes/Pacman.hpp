@@ -91,8 +91,6 @@ private:
      */
     void initGrid();
 
-    void initWall(PVector2Grid position);
-
     /**
      * @brief texture of grid image
      * 
