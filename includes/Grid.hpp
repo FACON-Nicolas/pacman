@@ -123,7 +123,27 @@ public:
      */
     std::vector<int> wallToBin(PVector2Grid position);
 
+    /**
+     * @brief find the dijkstra shortest path from A to B
+     * 
+     * @param start A
+     * 
+     * @param end B
+     * 
+     * @return std::vector<boost::graph_traits<PGraph>::vertex_descriptor> Nodes on pathfinding
+     */
     std::vector<boost::graph_traits<PGraph>::vertex_descriptor> dijkstra_shortest_paths(int start, int end);
+
+    /**
+     * @brief check if a value is a node.
+     * 
+     * @param node node value.
+     * 
+     * @return true if the value is a node.
+     * 
+     * @return false if the value is not a node.
+     */
+    bool isNode(int node);
 
     /**
      * @brief check if a specific wall is present in a tile value
@@ -162,8 +182,6 @@ public:
      * @return PVector2Grid value converted in PVector2Grid
      */
     static PVector2Grid convertNode(int value);
-
-    PGraph getGraph() { return m_graph; }
 
     /**
      * @brief Get the Weight Between Neighbors
@@ -294,9 +312,29 @@ private:
      */
     PacGum m_pacGumGrid[GRID_HEIGHT][GRID_WIDTH];
 
-    std::vector<PVertexDescriptor> p;
-    std::vector<int> d; 
-    std::vector<PVertexDescriptor> vertices;
+    /**
+     * @brief container of nodes, used to know if a value is a node
+     * 
+     */
+    std::vector<int> m_nodes;
+
+    /**
+     * @brief predecessor map used in pathfinding
+     * 
+     */
+    std::vector<PVertexDescriptor> m_predecessorMap;
+
+    /**
+     * @brief distance map used in pathfinding
+     * 
+     */
+    std::vector<int> m_distanceMap; 
+
+    /**
+     * @brief vertices stored to perf pathfinding
+     * 
+     */
+    std::vector<PVertexDescriptor> m_vertices;
 };
 
 #endif //GRID_HPP

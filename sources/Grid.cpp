@@ -3,8 +3,8 @@ using namespace std;
 
 Grid::Grid() {
     initializeGrids();
-    p = vector<PVertexDescriptor>(num_vertices(m_graph));
-    d = vector<int>(num_vertices(m_graph));
+    m_predecessorMap = vector<PVertexDescriptor>(num_vertices(m_graph));
+    m_distanceMap = vector<int>(num_vertices(m_graph));
     initializeVertices();
 }
 
@@ -14,24 +14,28 @@ Grid::~Grid() {
 
 void Grid::initializeVertices() {
     for (auto n : getNodesValues())
-        vertices.push_back(vertex(n, m_graph));
+        m_vertices.push_back(vertex(n, m_graph));
 }
 
 vector<boost::graph_traits<PGraph>::vertex_descriptor> Grid::dijkstra_shortest_paths(int start, int end) {
     auto startNode = getVertex(start);
     auto endNode = getVertex(end);
 
-    boost::dijkstra_shortest_paths(m_graph, startNode, boost::predecessor_map(&p[0]).distance_map(&d[0]));
+    boost::dijkstra_shortest_paths(m_graph, startNode, boost::predecessor_map(&m_predecessorMap[0]).distance_map(&m_distanceMap[0]));
 
     std::vector<boost::graph_traits<PGraph>::vertex_descriptor> path;
     boost::graph_traits<PGraph>::vertex_descriptor current = endNode;
 
     while (current !=  start) {
         path.push_back(current);
-        current = p[current];
+        current = m_predecessorMap[current];
     } path.push_back(start);
     
     return path;
+}
+
+bool Grid::isNode(int node) {
+    return find(m_nodes.begin(), m_nodes.end(), node) != m_nodes.end();
 }
 
 PVertexDescriptor Grid::getVertex(int node) {
@@ -40,7 +44,7 @@ PVertexDescriptor Grid::getVertex(int node) {
 
     for (vector<int>::iterator it = nodes.begin(); it != nodes.end(); it++)
         if (*it == node)
-            return vertices[it - nodes.begin()];
+            return m_vertices[it - nodes.begin()];
     throw invalid_argument("node not in graph.");
 }
 
@@ -175,6 +179,7 @@ vector<PEdge> Grid::edgesValues() {
 
 void Grid::initializeGraph() {
     int numberOfNodes = getNumberOfNodesInGrid();
+    m_nodes = getNodesValues();
 
     int nodeValues[numberOfNodes];
     for (int i  = 0; i < numberOfNodes; i++)
