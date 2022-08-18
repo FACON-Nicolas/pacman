@@ -3,10 +3,28 @@ using namespace std;
 
 Grid::Grid() {
     initializeGrids();
+    p = vector<PVertexDescriptor>(num_vertices(m_graph));
+    d = vector<int>(num_vertices(m_graph));
+    initializeVertices();
 }
 
 Grid::~Grid() {
 
+}
+
+void Grid::initializeVertices() {
+    for (auto n : getNodesValues())
+        vertices.push_back(vertex(n, m_graph));
+}
+
+PVertexDescriptor Grid::getVertex(int node) {
+    PVertexDescriptor v;
+    vector<int> nodes = getNodesValues();
+
+    for (vector<int>::iterator it = nodes.begin(); it != nodes.end(); it++)
+        if (*it == node)
+            return vertices[it - nodes.begin()];
+    throw invalid_argument("node not in graph.");
 }
 
 void Grid::initializeGrids() {

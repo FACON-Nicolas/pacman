@@ -7,12 +7,14 @@
 #define ROW_VALUE 1000
 #define COLUMN_VALUE 1
 
-#include <utility>
+#include <boost/config.hpp>
 #include <iostream>
-#include <algorithm>               
+#include <fstream>
+#include <chrono>
 #include <boost/graph/graph_traits.hpp>
 #include <boost/graph/adjacency_list.hpp>
 #include <boost/graph/dijkstra_shortest_paths.hpp>
+#include <boost/property_map/property_map.hpp>
 
 #include "../includes/Tile.hpp"
 #include "../includes/PacGum.hpp"
@@ -159,6 +161,31 @@ public:
      */
     static PVector2Grid convertNode(int value);
 
+    PGraph getGraph() { return m_graph; }
+
+    /**
+     * @brief Get the Weight Between Neighbors
+     * 
+     * to get the weight, the methods get the absolute value on dt a -> b. 
+     * 
+     * @param a First node position
+     * 
+     * @param b second node position
+     * 
+     * @return int weight between nodes.
+     */
+    int getWeightBetweenNeighbors(PVector2Grid a, PVector2Grid b);
+
+    /**
+     * @brief Get the Vertex object thanks to a node value
+     * 
+     * @param node node value
+     * @return PVertexDescriptor vertex
+     */
+    PVertexDescriptor getVertex(int node);
+    
+private:
+
     /**
      * @brief check if a position is a node.
      * 
@@ -224,21 +251,6 @@ public:
     std::vector<PVector2Grid> nodesNeighbors(PVector2Grid position);
 
     /**
-     * @brief Get the Weight Between Neighbors
-     * 
-     * to get the weight, the methods get the absolute value on dt a -> b. 
-     * 
-     * @param a First node position
-     * 
-     * @param b second node position
-     * 
-     * @return int weight between nodes.
-     */
-    int getWeightBetweenNeighbors(PVector2Grid a, PVector2Grid b);
-    
-private:
-
-    /**
      * @brief initialize main grid
      * 
      */
@@ -257,6 +269,12 @@ private:
     void initializePacGumGrid();
 
     /**
+     * @brief initializes the vertices.
+     * 
+     */
+    void initializeVertices();
+
+    /**
      * @brief main grid.
      * 
      */
@@ -273,8 +291,10 @@ private:
      * 
      */
     PacGum m_pacGumGrid[GRID_HEIGHT][GRID_WIDTH];
-    
 
+    std::vector<PVertexDescriptor> p;
+    std::vector<int> d; 
+    std::vector<PVertexDescriptor> vertices;
 };
 
 #endif //GRID_HPP
