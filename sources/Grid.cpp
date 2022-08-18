@@ -12,6 +12,7 @@ Grid::~Grid() {
 void Grid::initializeGrids() {
     initializeMainGrid();
     initializePacGumGrid();
+    initializeGraph();
 }
 
 int Grid::get(PVector2Grid position) const {
@@ -128,8 +129,10 @@ vector<PEdge> Grid::edgesValues() {
     vector<PEdge> edges;
     for (auto n : getNodesValues()) {
         for (auto neighbor : nodesNeighbors(convertNode(n))) {
-            PEdge e(n, convertPV2(neighbor));
-            edges.push_back(e);
+            if (n < convertPV2(neighbor)) {
+                PEdge e(n, convertPV2(neighbor));
+                edges.push_back(e);
+            }
         }
     }
     return edges;
@@ -138,25 +141,24 @@ vector<PEdge> Grid::edgesValues() {
 void Grid::initializeGraph() {
     int numberOfNodes = getNumberOfNodesInGrid();
 
-    m_graph = PGraph;
-
     int nodeValues[numberOfNodes];
     for (int i  = 0; i < numberOfNodes; i++)
         nodeValues[i] = getNodesValues()[i];
 
-    // TODO: define this on array
-    PEdge edgesValues;
+    PEdge edgesValuesArray[edgesValues().size()];
+    for (int i = 0; i < edgesValues().size(); i++)
+        edgesValuesArray[i] = edgesValues()[i];
 
-    vector<int> nodeUsed;
+    int numArc = sizeof(edgesValuesArray) / sizeof(PEdge);
+    int weight[numArc];
 
-    for (int node : nodeValues) {
-        PVector2Grid start = convertNode(node);
-        vector<PVector2Grid> neighbors = nodesNeighbors(start);
-        for (PVector2Grid end : neighbors)
-            if (find(nodeUsed.begin(), nodeUsed.end(), convertPV2(end)) == nodeUsed.end()) {
-                cout << "caca" << endl;
-            }
+    for (int i = 0; i < sizeof(edgesValuesArray) / sizeof(PEdge); i++) {
+        int a = edgesValuesArray[i].first, b = edgesValuesArray[i].second;
+        weight[i] = getWeightBetweenNeighbors(convertNode(a), convertNode(b)); 
     }
+
+    m_graph = PGraph(edgesValuesArray, edgesValuesArray + numArc, weight, numberOfNodes);
+
 }
 
 int Grid::convertPV2(PVector2Grid position) {

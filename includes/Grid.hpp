@@ -35,7 +35,7 @@ typedef std::pair<int, int> PEdge;
  * @brief define PGraph type, used to get a path between two points in a map.
  * 
  */
-boost::adjacency_list <boost::listS, boost::vecS, boost::UndirectedS, boost::no_property, boost::property<boost::edge_weight_t, int>> PGraph;
+typedef boost::adjacency_list <boost::listS, boost::vecS, boost::undirectedS, boost::no_property, boost::property<boost::edge_weight_t, int> > PGraph;
 
 
 /**
@@ -189,6 +189,11 @@ public:
      */
     std::vector<int> getNodesValues();
 
+    /**
+     * @brief gives the edges value.
+     * 
+     * @return std::vector<PEdge> edges values
+     */
     std::vector<PEdge> edgesValues();
 
     /**
