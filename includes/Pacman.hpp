@@ -3,6 +3,7 @@
 
 #include "SFML/Graphics.hpp"
 #include "../includes/Grid.hpp"
+#include "../includes/Constant.hpp"
 
 #include <cmath>
 
