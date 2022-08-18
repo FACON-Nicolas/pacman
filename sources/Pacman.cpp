@@ -1,4 +1,5 @@
 #include "../includes/Pacman.hpp"
+using namespace std;
 
 Window::~Window() {
 

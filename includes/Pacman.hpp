@@ -93,7 +93,16 @@ private:
 
     void initWall(PVector2Grid position);
 
+    /**
+     * @brief texture of grid image
+     * 
+     */
     sf::Texture m_gridTexture;
+
+    /**
+     * @brief sprite of grid image.
+     * 
+     */
     sf::Sprite m_gridSprite;
 
     Grid m_grid;
