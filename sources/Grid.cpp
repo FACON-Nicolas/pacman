@@ -17,6 +17,23 @@ void Grid::initializeVertices() {
         vertices.push_back(vertex(n, m_graph));
 }
 
+vector<boost::graph_traits<PGraph>::vertex_descriptor> Grid::dijkstra_shortest_paths(int start, int end) {
+    auto startNode = getVertex(start);
+    auto endNode = getVertex(end);
+
+    boost::dijkstra_shortest_paths(m_graph, startNode, boost::predecessor_map(&p[0]).distance_map(&d[0]));
+
+    std::vector<boost::graph_traits<PGraph>::vertex_descriptor> path;
+    boost::graph_traits<PGraph>::vertex_descriptor current = endNode;
+
+    while (current !=  start) {
+        path.push_back(current);
+        current = p[current];
+    } path.push_back(start);
+    
+    return path;
+}
+
 PVertexDescriptor Grid::getVertex(int node) {
     PVertexDescriptor v;
     vector<int> nodes = getNodesValues();
@@ -182,7 +199,6 @@ void Grid::initializeGraph() {
 int Grid::convertPV2(PVector2Grid position) {
     if (position.first < 0 || position.first >= GRID_HEIGHT || position.second < 0 || position.second >= GRID_WIDTH)
         throw invalid_argument("index out of range");
-    cout << position.first << " " << position.second << " = " << position.first * ROW_VALUE + position.second * COLUMN_VALUE << endl;
     return position.first * ROW_VALUE + position.second * COLUMN_VALUE;
 }
 
@@ -214,17 +230,14 @@ vector<int> Grid::getNodesValues() {
     vector<int> nodes;
     for (int i=0; i < GRID_HEIGHT; i++)
         for (int j = 0; j < GRID_WIDTH; j++)
-            if (isNode(PVector2Grid(i, j))) {
-                cout << i << " " << j << " = " << convertPV2(PVector2Grid(i, j)) << endl;
+            if (isNode(PVector2Grid(i, j))) 
                 nodes.push_back(convertPV2(PVector2Grid(i, j)));
-            }
     return nodes;
 }
 
 vector<PVector2Grid> Grid::horizontalNodesNeighbors(PVector2Grid position) {
     int row(position.first), column(position.second);
     vector<PVector2Grid> nodesPosition;
-    cout << row << " " << column << endl;
     if (!isWallPresent(position, Wall::LEFT)) {
         do {
             column--;

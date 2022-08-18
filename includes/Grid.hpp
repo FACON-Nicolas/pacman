@@ -123,6 +123,8 @@ public:
      */
     std::vector<int> wallToBin(PVector2Grid position);
 
+    std::vector<boost::graph_traits<PGraph>::vertex_descriptor> dijkstra_shortest_paths(int start, int end);
+
     /**
      * @brief check if a specific wall is present in a tile value
      * 
