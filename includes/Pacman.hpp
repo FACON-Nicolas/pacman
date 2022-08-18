@@ -2,7 +2,7 @@
 #define PACMAN_HPP
 
 #define WINDOW_WIDTH    1600
-#define WINDOW_HEIGHT   900
+#define WINDOW_HEIGHT   901
 #define CASE_SIZE       45
 #define FRAME_RATE      60
 
@@ -91,10 +91,10 @@ private:
      */
     void initGrid();
 
-    void drawWall(PVector2Grid position);
+    void initWall(PVector2Grid position);
 
-    sf::Texture textures[GRID_HEIGHT][GRID_WIDTH];
-    sf::Sprite sprites[GRID_HEIGHT][GRID_WIDTH];
+    sf::Texture m_gridTexture;
+    sf::Sprite m_gridSprite;
 
     Grid m_grid;
 
