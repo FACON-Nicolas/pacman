@@ -99,6 +99,10 @@ private:
      */
     sf::Sprite m_gridSprite;
 
+    /**
+     * @brief game grid.
+     * 
+     */
     Grid m_grid;
 
 };
