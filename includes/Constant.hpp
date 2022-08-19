@@ -13,6 +13,6 @@
 #define FRAME_RATE              60
 
 #define NORMAL_SPEED            3
-#define VULNERABILITY_SPEED     NORMAL_SPEED / 2
+#define VULNERABILITY_SPEED     1.5
 
 #endif //Constant_HPP
