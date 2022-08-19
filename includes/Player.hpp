@@ -85,14 +85,14 @@ public:
      * 
      * @return float m_x value
      */
-    float getX() const { return m_x; }
+    float getX() const { return  m_x; }
 
     /**
      * @brief setter for m_x
      * 
      * @param x new m_x value
      */
-    void setX(float x) { m_x = x; }
+    void setX(float x) { m_x = (int) x % (CASE_SIZE * GRID_WIDTH); }
 
     /**
      * @brief getter for m_y
@@ -174,6 +174,10 @@ private:
      */
     Direction m_nextDirection;
 
+    /**
+     * @brief current direction, might be top, down, left, right or stop.
+     * 
+     */
     Direction m_direction;
 
 };
