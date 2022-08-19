@@ -1,5 +1,4 @@
 #include "../includes/Grid.hpp"
-#include "../includes/Constant.hpp"
 using namespace std;
 
 Grid::Grid() {
