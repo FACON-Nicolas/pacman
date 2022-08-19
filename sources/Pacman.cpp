@@ -2,7 +2,7 @@
 using namespace std;
 
 Window::~Window() {
-
+    
 }
 
 void Window::run() {

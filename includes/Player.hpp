@@ -2,6 +2,10 @@
 #define PLAYER_HPP
 
 #include "../includes/Constant.hpp"
+
+#include "SFML/Graphics.hpp"
+#include "../includes/Grid.hpp"
+#include "../includes/Wall.hpp"
 #include "../includes/Direction.hpp"
 #include "../includes/Animation.hpp"
 
@@ -26,7 +30,7 @@ public:
      * @brief Destroy the Player object
      * 
      */
-    ~Player();
+    virtual ~Player();
 
     /**
      * @brief 
@@ -53,34 +57,35 @@ public:
      * 
      * @return Animation animation got.
      */
-    virtual Animation getCurrentAnimation();
+    Animation getCurrentAnimation() { return *m_currentAnim; }
 
     /**
      * @brief Set the Current Animation object
      * 
-     * @param anim new Anim value
      */
     virtual void setCurrentAnimation();
 
     /**
-     * @brief Get the Next Direction object
+     * @brief determines if a player is alive.
      * 
-     * @return Direction next direction
+     * @return true if the player is alive
+     * 
+     * @return false if the player is not alive.
      */
-    virtual Direction getNextDirection();
+    virtual bool isAlive(); 
 
     /**
-     * @brief Set the Next Direction object
+     * @brief Get the Sprite object
      * 
-     * @param direction new next direction
+     * @return sf::Sprite currentSprite
      */
-    virtual void setNextDirection(Direction direction);
+    sf::Sprite getSprite() const { return *m_sprite; }
 
     /**
      * @brief manage the player movements.
      * 
      */
-    virtual void move();
+    void move();
 
     /**
      * @brief getter for m_x
@@ -194,8 +199,43 @@ public:
      * 
      * @return std::string path to get sprites.
      */
-    std::string getPath() const { "images/" + m_name + "/"; }
+    std::string getPath() const { return "images/" + m_name + "/"; }
 
+    /**
+     * @brief method called at each frame.
+     * 
+     */
+    void update();
+
+    /**
+     * @brief check the current case walls and the direction and determines if the player cans move
+     * 
+     * @return true if the player cans move
+     * 
+     * @return false if the player cans not move
+     */
+    bool canMove();
+
+    /**
+     * @brief Get the Grid Position object
+     * 
+     * @return PVector2Grid current grid position
+     */
+    PVector2Grid getGridPosition() const { return PVector2Grid((int) m_y % CASE_SIZE, (int) m_x % CASE_SIZE); }
+
+    /**
+     * @brief Get the Tile Value object
+     * 
+     * @return int current tile value
+     */
+    int getTileValue() const { return m_currentPositionTileValue; }
+
+    /**
+     * @brief Set the Tile Value object
+     * 
+     * @param tileValue new tile value
+     */
+    void setTileValue(int tileValue) { this->m_currentPositionTileValue = tileValue; }
 
 private:
 
@@ -246,6 +286,24 @@ private:
      * 
      */
     float m_speed;
+
+    /**
+     * @brief current sprite player.
+     * 
+     */
+    sf::Sprite* m_sprite;
+
+    /**
+     * @brief tile value at this position.
+     * 
+     */
+    int m_currentPositionTileValue;
+
+    /**
+     * @brief current animation player.
+     * 
+     */
+    Animation* m_currentAnim;
 
 };
 

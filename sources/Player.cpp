@@ -7,6 +7,7 @@ bool Player::isCollidingPlayer(Player player) {
 
 Player::~Player() {
     delete m_sprite;
+    delete m_currentAnim;
 }
 
 bool Player::isPerfectlyPositionned() {
