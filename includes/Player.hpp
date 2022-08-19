@@ -11,6 +11,10 @@
 
 #include <stdexcept>
 
+/**
+ * @brief Player class, used to create players (human, AI)
+ * 
+ */
 class Player {
 
 public:
@@ -57,7 +61,7 @@ public:
      * 
      * @return Animation animation got.
      */
-    Animation getCurrentAnimation() { return *m_currentAnim; }
+    virtual Animation getCurrentAnimation();
 
     /**
      * @brief Set the Current Animation object
@@ -80,6 +84,8 @@ public:
      * @return sf::Sprite currentSprite
      */
     sf::Sprite getSprite() const { return *m_sprite; }
+
+    void setSprite(sf::Sprite* sprite) { m_sprite = sprite; }
 
     /**
      * @brief manage the player movements.
@@ -205,7 +211,7 @@ public:
      * @brief method called at each frame.
      * 
      */
-    void update();
+    virtual void update();
 
     /**
      * @brief check the current case walls and the direction and determines if the player cans move
@@ -236,6 +242,8 @@ public:
      * @param tileValue new tile value
      */
     void setTileValue(int tileValue) { this->m_currentPositionTileValue = tileValue; }
+
+    virtual void setCurrentAnimation(Animation* animation) const;
 
 private:
 
@@ -298,12 +306,6 @@ private:
      * 
      */
     int m_currentPositionTileValue;
-
-    /**
-     * @brief current animation player.
-     * 
-     */
-    Animation* m_currentAnim;
 
 };
 
