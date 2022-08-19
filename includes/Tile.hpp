@@ -125,15 +125,39 @@ public:
     std::vector<int> wallToBin();
 
     /**
-     * @brief check if a number 
+     * @brief check if a number contains a wall
      * 
-     * @param number 
+     * @param wall wall to check
      * 
-     * @return true 
+     * @return true if wall is present
      * 
-     * @return false 
+     * @return false if not true
      */
     bool isWallPresent(Wall wall);
+
+    /**
+     * @brief convert m_value to an array of int equivalent to a reversed binary.
+     * 
+     * example : m_value = 8 -> 0b1000 -> [0,0,0,1]
+     * 
+     * @param value to convert.
+     * 
+     * @return vector<int> reversed binary.
+     */
+    static std::vector<int> wallToBin(int value);
+
+    /**
+     * @brief check if a number contains a wall
+     * 
+     * @param value number to check
+     * 
+     * @param wall wall to find
+     * 
+     * @return true if wall is present
+     * 
+     * @return false if not true
+     */
+    static bool isWallPresent(int value, Wall wall);
 
 private:
     /**
