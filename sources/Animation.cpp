@@ -23,3 +23,7 @@ void Animation::update() {
         m_index = (m_index+1) % m_size;
     }
 }
+
+Animation::~Animation() {
+    
+}

@@ -2,6 +2,7 @@
 #define ANIMATION_HPP
 
 #include <string>
+#include <iostream>
 
 #include "SFML/Graphics.hpp"
 
@@ -16,7 +17,19 @@ public:
      * 
      * @param name name of animation
      */
-    Animation(int size, std::string name) : m_size(size), m_name(name), m_index(0) {}
+    Animation(int size, std::string character, std::string name, bool reverse=false) : m_size(size), m_character(character), m_name(name), m_index(0) {
+        for (int i = 1; i <= size; i++) {
+            m_textures.push_back(sf::Texture());
+            m_textures[i-1].loadFromFile("images/" + character + "/" + name + std::to_string(i) + ".png");
+            std::cout << "images/" + character + "/" + name + std::to_string(i) + ".png" << std::endl;
+        } if (reverse) 
+            for (int i = 1; i < size-1; i++) {
+                m_textures.push_back(sf::Texture());
+                m_textures[size+(i-1)].loadFromFile("images/" + character + "/" + name + std::to_string(size-i) + ".png");
+                std::cout << "images/" + character + "/" + name + std::to_string(size-i) + ".png" << std::endl;
+                m_size++;
+            }
+    }
 
     /**
      * @brief Destroy the Animation object
@@ -108,6 +121,12 @@ private:
      * 
      */
     sf::Sprite m_sprite;
+
+    /**
+     * @brief character's name
+     * 
+     */
+    std::string m_character;
     
 };
 
