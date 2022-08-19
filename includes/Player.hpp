@@ -5,6 +5,8 @@
 #include "../includes/Direction.hpp"
 #include "../includes/Animation.hpp"
 
+#include <stdexcept>
+
 class Player {
 
 public:
@@ -18,7 +20,9 @@ public:
      * 
      * @param y start vertical pos
      */
-    Player(std::string name, float x, float y) : m_name(name), m_x(x), m_y(y) {}
+    Player(std::string name, float x, float y, float speed) : m_name(name), m_x(x), m_y(y), m_speed(speed) {
+        m_path = "images/" + m_name + "/";
+    }
 
     /**
      * @brief Destroy the Player object
@@ -92,7 +96,7 @@ public:
      * 
      * @param x new m_x value
      */
-    void setX(float x) { m_x = (int) x % (CASE_SIZE * GRID_WIDTH); }
+    void setX(float x) { m_x = ((int) x % (CASE_SIZE * GRID_WIDTH)); }
 
     /**
      * @brief getter for m_y
@@ -135,6 +139,65 @@ public:
      * @param verticalMovement new vmove value
      */
     void setVerticalMovement(float verticalMovement) { m_verticalMovement = verticalMovement; }
+
+    /**
+     * @brief Get the Current Direction object
+     * 
+     * @return Direction current direction
+     */
+    Direction getCurrentDirection() const { return m_direction; }
+
+    /**
+     * @brief Get the Next Direction object
+     * 
+     * @return Direction next direction
+     */
+    Direction getNextDirection() const { return m_nextDirection; }
+
+    /**
+     * @brief Set the Current Direction object
+     * 
+     * @param direction new direction value
+     */
+    void setCurrentDirection(Direction direction);
+
+    /**
+     * @brief Set the Next Direction object
+     * 
+     * @param direction 
+     */
+    void setNextDirection(Direction direction) { this->m_nextDirection = direction; }
+
+    /**
+     * @brief Set the Movement object
+     * 
+     * @param horizontal horizontal value
+     * 
+     * @param vertical vertical Value
+     */
+    void setMovement(int horizontal, int vertical);
+
+    /**
+     * @brief Get the Speed object
+     * 
+     * @return float player's speed
+     */
+    float getSpeed() const { return m_speed; }
+
+    /**
+     * @brief Set the Speed object
+     * 
+     * @param speed new player's speed
+     */
+    void setSpeed(float speed) { this->m_speed = speed; }
+
+    /**
+     * @brief Get the Path object
+     * 
+     * @return std::string path to get sprites.
+     */
+    std::string getPath() const { return m_path; }
+
 
 private:
 
@@ -179,6 +242,18 @@ private:
      * 
      */
     Direction m_direction;
+
+    /**
+     * @brief player's speed
+     * 
+     */
+    float m_speed;
+
+    /**
+     * @brief path to get sprites.
+     * 
+     */
+    std::string m_path;
 
 };
 
