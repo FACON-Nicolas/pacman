@@ -20,9 +20,7 @@ public:
      * 
      * @param y start vertical pos
      */
-    Player(std::string name, float x, float y, float speed) : m_name(name), m_x(x), m_y(y), m_speed(speed) {
-        m_path = "images/" + m_name + "/";
-    }
+    Player(std::string name, float x, float y, float speed) : m_name(name), m_x(x), m_y(y), m_speed(speed) {}
 
     /**
      * @brief Destroy the Player object
@@ -196,7 +194,7 @@ public:
      * 
      * @return std::string path to get sprites.
      */
-    std::string getPath() const { return m_path; }
+    std::string getPath() const { "images/" + m_name + "/"; }
 
 
 private:
@@ -248,12 +246,6 @@ private:
      * 
      */
     float m_speed;
-
-    /**
-     * @brief path to get sprites.
-     * 
-     */
-    std::string m_path;
 
 };
 
