@@ -5,16 +5,16 @@ bool Player::isCollidingPlayer(Player player) {
     return abs(player.m_x - m_x) < CASE_SIZE && abs(player.m_y - m_y) < CASE_SIZE;
 }
 
+Player::~Player() {
+    delete m_sprite;
+}
+
 bool Player::isPerfectlyPositionned() {
     return (int) m_x % CASE_SIZE == 0 && (int) m_y % CASE_SIZE == 0;
 }
 
-Player::~Player() {
-    
-}
-
 void Player::setMovement(int horizontal, int vertical) {
-    if (vertical != 0 && horizontal != 0) throw std::invalid_argument("hmove et vmove might are not valid");
+    if (vertical != 0 && horizontal != 0) throw std::invalid_argument("hmove et vmove are not valid");
     setHorizontalMovement(horizontal);
     setVerticalMovement(vertical);
 }
@@ -26,4 +26,20 @@ void Player::setCurrentDirection(Direction direction) {
     else if (direction == Direction::BOTTOM) setMovement(0, 1);
     else if (direction == Direction::LEFT) setMovement(-1, 0);
     else setMovement(1, 0);
+}
+
+void Player::move() {
+    if (isPerfectlyPositionned())
+        if (canMove()) {
+            setX(m_horizontalMovement * m_speed + getX());
+            setY(m_horizontalMovement * m_speed + getY());
+        } else setCurrentDirection(Direction::STOP);
+}
+
+bool Player::canMove() {
+    return (m_direction == Direction::LEFT && !Tile::isWallPresent(getTileValue(), Wall::LEFT)
+    || (m_direction == Direction::RIGHT && !Tile::isWallPresent(getTileValue(), Wall::RIGHT)))
+    || (m_direction == Direction::BOTTOM && !Tile::isWallPresent(getTileValue(), Wall::BOTTOM))
+    || (m_direction == Direction::TOP && !Tile::isWallPresent(getTileValue(), Wall::TOP))
+    || (m_direction == Direction::STOP);
 }
