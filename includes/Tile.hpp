@@ -1,6 +1,7 @@
 #ifndef TILE_HPP
 #define TILE_HPP
 
+#include "../includes/Constant.hpp"
 #include "Wall.hpp"
 #include <stdexcept>
 #include <vector>
