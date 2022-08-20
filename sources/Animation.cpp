@@ -19,8 +19,9 @@ bool Animation::isPaused() {
 
 void Animation::update() {
     if (!isPaused()) {
-        m_sprite.setTexture(getTexture());
-        m_index = (m_index+1) % m_size;
+        m_sprite.setTexture(*getTexture());
+        m_index = ((m_valueToInc++)/m_dividerUpdate) % m_size;
+        std::cout << "/images/" + m_character + "/" + m_name + std::to_string(m_index) + ".png" << std::endl;
     }
 }
 

@@ -18,17 +18,20 @@ public:
      * @param name name of animation
      */
     Animation(int size, std::string character, std::string name, bool reverse=false) : m_size(size), m_character(character), m_name(name), m_index(0) {
+        m_isPaused = false; 
+        m_valueToInc = 0;
         for (int i = 1; i <= size; i++) {
-            m_textures.push_back(sf::Texture());
-            m_textures[i-1].loadFromFile("images/" + character + "/" + name + std::to_string(i) + ".png");
-            std::cout << "images/" + character + "/" + name + std::to_string(i) + ".png" << std::endl;
+            sf::Texture t;
+            t.loadFromFile("images/" + character + "/" + name + std::to_string(i) + ".png");
+            m_textures.push_back(t);
         } if (reverse) 
             for (int i = 1; i < size-1; i++) {
-                m_textures.push_back(sf::Texture());
-                m_textures[size+(i-1)].loadFromFile("images/" + character + "/" + name + std::to_string(size-i) + ".png");
-                std::cout << "images/" + character + "/" + name + std::to_string(size-i) + ".png" << std::endl;
+                sf::Texture t;
+                t.loadFromFile("images/" + character + "/" + name + std::to_string(size-i) + ".png");
+                m_textures.push_back(t);
                 m_size++;
             }
+        update();
     }
 
     /**
@@ -60,7 +63,7 @@ public:
      * 
      * @return sf::Sprite 
      */
-    sf::Sprite getSprite() const { return m_sprite; }
+    sf::Sprite* getSprite() { return &m_sprite; }
 
     /**
      * @brief check if the animation is paused
@@ -76,7 +79,7 @@ public:
      * 
      * @return sf::Texture current texture
      */
-    sf::Texture getTexture() const { return m_textures[m_index]; }
+    sf::Texture* getTexture() { return &m_textures[m_index]; }
 
     /**
      * @brief method called at each frame.
@@ -127,6 +130,10 @@ private:
      * 
      */
     std::string m_character;
+
+    static inline int m_dividerUpdate = 5;
+
+    int m_valueToInc;
     
 };
 
