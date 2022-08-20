@@ -38,8 +38,23 @@ void Player::move() {
 
 bool Player::canMove() {
     return (m_direction == Direction::LEFT && !Tile::isWallPresent(getTileValue(), Wall::LEFT)
-    || (m_direction == Direction::RIGHT && !Tile::isWallPresent(getTileValue(), Wall::RIGHT)))
-    || (m_direction == Direction::BOTTOM && !Tile::isWallPresent(getTileValue(), Wall::BOTTOM))
-    || (m_direction == Direction::TOP && !Tile::isWallPresent(getTileValue(), Wall::TOP))
-    || (m_direction == Direction::STOP);
+        || (m_direction == Direction::RIGHT && !Tile::isWallPresent(getTileValue(), Wall::RIGHT)))
+        || (m_direction == Direction::BOTTOM && !Tile::isWallPresent(getTileValue(), Wall::BOTTOM))
+        || (m_direction == Direction::TOP && !Tile::isWallPresent(getTileValue(), Wall::TOP))
+        || (m_direction == Direction::STOP);
+}
+
+bool Player::nextDirectionIsValid(Direction direction) {
+    return (direction == Direction::LEFT && !Tile::isWallPresent(getTileValue(), Wall::LEFT)
+        || (direction == Direction::BOTTOM && !Tile::isWallPresent(getTileValue(), Wall::BOTTOM))
+        || (direction == Direction::TOP && !Tile::isWallPresent(getTileValue(), Wall::TOP))
+        || (direction == Direction::RIGHT && !Tile::isWallPresent(getTileValue(), Wall::RIGHT))
+        || (direction == Direction::STOP));
+}
+
+bool Player::nextDirectionIsOnSameAxis(Direction direction) {
+    return (m_direction == Direction::RIGHT && direction == Direction::LEFT)
+        || (m_direction == Direction::LEFT && direction == Direction::RIGHT)
+        || (m_direction == Direction::TOP && direction == Direction::BOTTOM)
+        || (m_direction == Direction::BOTTOM && direction == Direction::TOP);
 }

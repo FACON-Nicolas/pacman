@@ -57,35 +57,17 @@ public:
     bool isPerfectlyPositionned();
 
     /**
-     * @brief Get the Current Animation object
-     * 
-     * @return Animation animation got.
-     */
-    virtual Animation getCurrentAnimation();
-
-    /**
-     * @brief Set the Current Animation object
-     * 
-     */
-    virtual void setCurrentAnimation();
-
-    /**
-     * @brief determines if a player is alive.
-     * 
-     * @return true if the player is alive
-     * 
-     * @return false if the player is not alive.
-     */
-    virtual bool isAlive(); 
-
-    /**
      * @brief Get the Sprite object
      * 
      * @return sf::Sprite currentSprite
      */
-    sf::Sprite getSprite() const { return *m_sprite; }
+    sf::Sprite* getSprite() const { return m_sprite; }
 
     void setSprite(sf::Sprite* sprite) { m_sprite = sprite; }
+
+    bool nextDirectionIsValid(Direction direction);
+
+    bool nextDirectionIsOnSameAxis(Direction direction);
 
     /**
      * @brief manage the player movements.
@@ -208,12 +190,6 @@ public:
     std::string getPath() const { return "images/" + m_name + "/"; }
 
     /**
-     * @brief method called at each frame.
-     * 
-     */
-    virtual void update();
-
-    /**
      * @brief check the current case walls and the direction and determines if the player cans move
      * 
      * @return true if the player cans move
@@ -242,8 +218,6 @@ public:
      * @param tileValue new tile value
      */
     void setTileValue(int tileValue) { this->m_currentPositionTileValue = tileValue; }
-
-    virtual void setCurrentAnimation(Animation* animation) const;
 
 private:
 

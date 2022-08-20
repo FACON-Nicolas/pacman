@@ -30,8 +30,10 @@ public:
         m_walkAnim = new Animation(3, name, "walk", true);
         m_deathAnim = new Animation(11, name, "death");
         m_currentAnim = m_walkAnim;
-        m_currentAnim->pause();
+        setCurrentAnimation();
     }
+
+    sf::Texture* getTexture() const { return m_currentAnim->getTexture(); }
 
     /**
      * @brief Destroy the Human object
@@ -52,6 +54,10 @@ public:
     void update();
 
     bool isCollided() const { return m_isCollidingEnemy; }
+
+    bool isAlive();
+
+    void setCurrentAnimation(Animation* animation) { m_currentAnim = animation; }
 
 private:
 
