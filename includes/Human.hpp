@@ -51,6 +51,8 @@ public:
      */
     void update();
 
+    bool isCollided() const { return m_isCollidingEnemy; }
+
 private:
 
     /**
