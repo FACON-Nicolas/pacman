@@ -3,6 +3,7 @@
 
 #include "SFML/Graphics.hpp"
 #include "../includes/Grid.hpp"
+#include "../includes/Human.hpp"
 #include "../includes/Constant.hpp"
 
 #include <cmath>
@@ -28,6 +29,7 @@ public:
     Window(sf::VideoMode video, const sf::String& title) : sf::RenderWindow(video, title) {
         setFramerateLimit(FRAME_RATE);
         initGrid();
+        initPlayers();
         run();
     }
 
@@ -59,13 +61,19 @@ public:
      * @brief check the input in keyboard and play actions.
      * 
      */
-    void keyboardControls();
+    void keyboardControls(sf::Keyboard::Key key);
 
     /**
      * @brief check events (key pressed, mouse used, window closed, etc)
      * 
      */
     void event();
+
+    /**
+     * @brief init the players.
+     * 
+     */
+    void initPlayers();
 
 private:
 
@@ -104,6 +112,12 @@ private:
      * 
      */
     Grid m_grid;
+
+    /**
+     * @brief human player.
+     * 
+     */
+    Human* m_pacman;
 
 };
 

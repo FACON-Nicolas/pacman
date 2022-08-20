@@ -2,12 +2,14 @@
 using namespace std;
 
 Window::~Window() {
-    
+    cout << "Window deleted successfully" << endl;
+    delete m_pacman;
 }
 
 void Window::run() {
     while (isOpen()) {
         event();
+        m_pacman->update();
         update();
     }
 }
@@ -21,7 +23,7 @@ void Window::event() {
             close();
             break;
         case sf::Event::KeyPressed:
-            keyboardControls();
+            keyboardControls(m_event.key.code);
             break;
         default:
             break;
@@ -32,6 +34,8 @@ void Window::event() {
 void Window::update() {
     clear();
     drawGrid();
+    m_pacman->getSprite()->setTexture(*m_pacman->getTexture());
+    draw(*m_pacman->getSprite());
     display();
 }
 
@@ -44,8 +48,39 @@ void Window::initGrid() {
     m_gridSprite.setTexture(m_gridTexture);
 }
 
-void Window::keyboardControls() {
+void Window::keyboardControls(sf::Keyboard::Key key) {
+    switch (key) {
+    case sf::Keyboard::Right:
+        if (!m_pacman->isCollided()) 
+            if ((m_pacman->nextDirectionIsOnSameAxis(Direction::RIGHT) || m_pacman->isPerfectlyPositionned()) && m_pacman->nextDirectionIsValid(Direction::RIGHT)) 
+                m_pacman->setCurrentDirection(Direction::RIGHT);
+            else m_pacman->setNextDirection(Direction::RIGHT);
+        break;
+    case sf::Keyboard::Left:
+        if (!m_pacman->isCollided()) 
+            if ((m_pacman->nextDirectionIsOnSameAxis(Direction::LEFT) || m_pacman->isPerfectlyPositionned()) && m_pacman->nextDirectionIsValid(Direction::LEFT)) 
+                m_pacman->setCurrentDirection(Direction::LEFT);
+            else m_pacman->setNextDirection(Direction::LEFT);
+        break;
+    case sf::Keyboard::Down:
+        if (!m_pacman->isCollided()) 
+            if ((m_pacman->nextDirectionIsOnSameAxis(Direction::BOTTOM) || m_pacman->isPerfectlyPositionned()) && m_pacman->nextDirectionIsValid(Direction::BOTTOM)) 
+                m_pacman->setCurrentDirection(Direction::BOTTOM);
+            else m_pacman->setNextDirection(Direction::BOTTOM);
+        break;
+    case sf::Keyboard::Up:
+        if (!m_pacman->isCollided()) 
+            if ((m_pacman->nextDirectionIsOnSameAxis(Direction::TOP) || m_pacman->isPerfectlyPositionned()) && m_pacman->nextDirectionIsValid(Direction::TOP)) 
+                m_pacman->setCurrentDirection(Direction::TOP);
+            else m_pacman->setNextDirection(Direction::TOP);
+        break;
+    default:
+        break;
+    }
+}
 
+void Window::initPlayers() {
+    m_pacman = new Human("pacman", 10*CASE_SIZE, 19*CASE_SIZE, NORMAL_SPEED);
 }
 
 int main() {
