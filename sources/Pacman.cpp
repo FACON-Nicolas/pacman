@@ -34,7 +34,7 @@ void Window::event() {
 void Window::update() {
     clear();
     drawGrid();
-    m_pacman->getSprite()->setTexture(*m_pacman->getTexture());
+    updatePlayers();
     draw(*m_pacman->getSprite());
     display();
 }
@@ -80,7 +80,13 @@ void Window::keyboardControls(sf::Keyboard::Key key) {
 }
 
 void Window::initPlayers() {
-    m_pacman = new Human("pacman", 10*CASE_SIZE, 19*CASE_SIZE, NORMAL_SPEED);
+    m_pacman = new Human("pacman", 450, 855, NORMAL_SPEED);
+}
+
+void Window::updatePlayers() {
+    m_pacman->setTileValue(m_grid.get(PVector2Grid(m_pacman->getGridPosition())));
+    m_pacman->getSprite()->setTexture(*m_pacman->getTexture());
+    m_pacman->getSprite()->setPosition(m_pacman->getX(), m_pacman->getY());
 }
 
 int main() {

@@ -75,6 +75,12 @@ public:
      */
     void initPlayers();
 
+    /**
+     * @brief method to update players' sprite to avoid white background on sprite.
+     * 
+     */
+    void updatePlayers();
+
 private:
 
     /**
