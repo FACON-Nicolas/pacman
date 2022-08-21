@@ -84,9 +84,9 @@ void Window::initPlayers() {
 }
 
 void Window::updatePlayers() {
-    m_pacman->setTileValue(m_grid.get(PVector2Grid(m_pacman->getGridPosition())));
     m_pacman->getSprite()->setTexture(*m_pacman->getTexture());
     m_pacman->getSprite()->setPosition(m_pacman->getX(), m_pacman->getY());
+    m_pacman->setTileValue(m_grid.get(PVector2Grid(m_pacman->getGridPosition())));
 }
 
 int main() {

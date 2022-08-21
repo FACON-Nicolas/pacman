@@ -68,9 +68,7 @@ public:
      */
     sf::Sprite* getSprite() const { return m_sprite; }
 
-    void setSprite(sf::Sprite* sprite) { 
-        m_sprite = sprite;
-    }
+    void setSprite(sf::Sprite* sprite) { m_sprite = sprite; }
 
     bool nextDirectionIsValid(Direction direction);
 
@@ -87,7 +85,7 @@ public:
      * 
      * @return float m_x value
      */
-    float getX() const { return  m_x; }
+    float getX() const { return m_x; }
 
     /**
      * @brief setter for m_x

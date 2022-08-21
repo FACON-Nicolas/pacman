@@ -30,13 +30,14 @@ void Player::setCurrentDirection(Direction direction) {
 
 void Player::move() {
     if(isPerfectlyPositionned()) {
-        if (!canMove()) {
+        if (!canMove() || nextDirectionIsValid(getNextDirection())) {
             setCurrentDirection(getNextDirection());
             setNextDirection(Direction::STOP);
         } if (!canMove()) setCurrentDirection(getNextDirection());
     }
-    m_x += (m_speed * m_horizontalMovement);
-    m_y += (m_speed * m_verticalMovement);
+    setX(m_x + (m_speed * m_horizontalMovement));
+    setY(m_y + (m_speed * m_verticalMovement));
+    m_x = (int) m_x < 0 ? (GRID_WIDTH-1)*CASE_SIZE : m_x;
 }
 
 bool Player::canMove() {
@@ -51,8 +52,7 @@ bool Player::nextDirectionIsValid(Direction direction) {
     return (direction == Direction::LEFT && !Tile::isWallPresent(getTileValue(), Wall::LEFT)
         || (direction == Direction::BOTTOM && !Tile::isWallPresent(getTileValue(), Wall::BOTTOM))
         || (direction == Direction::TOP && !Tile::isWallPresent(getTileValue(), Wall::TOP))
-        || (direction == Direction::RIGHT && !Tile::isWallPresent(getTileValue(), Wall::RIGHT))
-        || (direction == Direction::STOP));
+        || (direction == Direction::RIGHT && !Tile::isWallPresent(getTileValue(), Wall::RIGHT)));
 }
 
 bool Player::nextDirectionIsOnSameAxis(Direction direction) {
