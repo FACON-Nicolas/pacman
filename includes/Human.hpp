@@ -27,11 +27,13 @@ public:
     Human(std::string name, float x, float y, float speed) : Player(name, x, y, speed) {
         m_remainingLives = 3;
         m_isCollidingEnemy = false;
-        m_walkAnim = new Animation(3, name, "walk_right", true);
+        m_walkLeftAnim = new Animation(3, name, "walk_left", true);
+        m_walkRightAnim = new Animation(3, name, "walk_right", true);
         m_deathAnim = new Animation(11, name, "death");
-        m_currentAnim = m_walkAnim;
+        m_currentAnim = m_walkRightAnim;
         setCurrentAnimation();
         setCurrentDirection(Direction::STOP);
+        setNextDirection(Direction::STOP);
     }
 
     sf::Texture* getTexture() const { return m_currentAnim->getTexture(); }
@@ -84,13 +86,19 @@ private:
      * @brief walk animation
      * 
      */
-    Animation* m_walkAnim;
+    Animation* m_walkRightAnim;
 
     /**
      * @brief death animation.
      * 
      */
     Animation* m_deathAnim;
+
+    /**
+     * @brief walk left anim
+     * 
+     */
+    Animation* m_walkLeftAnim;
     
 
 };
