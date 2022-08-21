@@ -29,16 +29,19 @@ void Player::setCurrentDirection(Direction direction) {
 }
 
 void Player::move() {
-    if (isPerfectlyPositionned())
-        if (canMove()) {
-            setX(m_horizontalMovement * m_speed + getX());
-            setY(m_horizontalMovement * m_speed + getY());
-        } else setCurrentDirection(Direction::STOP);
+    if(isPerfectlyPositionned()) {
+        if (!canMove()) {
+            setCurrentDirection(getNextDirection());
+            setNextDirection(Direction::STOP);
+        } if (!canMove()) setCurrentDirection(getNextDirection());
+    }
+    m_x += (m_speed * m_horizontalMovement);
+    m_y += (m_speed * m_verticalMovement);
 }
 
 bool Player::canMove() {
-    return (m_direction == Direction::LEFT && !Tile::isWallPresent(getTileValue(), Wall::LEFT)
-        || (m_direction == Direction::RIGHT && !Tile::isWallPresent(getTileValue(), Wall::RIGHT)))
+    return (m_direction == Direction::LEFT && !Tile::isWallPresent(getTileValue(), Wall::LEFT))
+        || (m_direction == Direction::RIGHT && !Tile::isWallPresent(getTileValue(), Wall::RIGHT))
         || (m_direction == Direction::BOTTOM && !Tile::isWallPresent(getTileValue(), Wall::BOTTOM))
         || (m_direction == Direction::TOP && !Tile::isWallPresent(getTileValue(), Wall::TOP))
         || (m_direction == Direction::STOP);

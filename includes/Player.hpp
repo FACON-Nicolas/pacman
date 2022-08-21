@@ -28,7 +28,12 @@ public:
      * 
      * @param y start vertical pos
      */
-    Player(std::string name, float x, float y, float speed) : m_name(name), m_x(x), m_y(y), m_speed(speed) {}
+    Player(std::string name, float x, float y, float speed) {
+        m_name = name;
+        m_x = x;
+        m_y = y;
+        m_speed = speed;
+    }
 
     /**
      * @brief Destroy the Player object
@@ -63,7 +68,9 @@ public:
      */
     sf::Sprite* getSprite() const { return m_sprite; }
 
-    void setSprite(sf::Sprite* sprite) { m_sprite = sprite; }
+    void setSprite(sf::Sprite* sprite) { 
+        m_sprite = sprite;
+    }
 
     bool nextDirectionIsValid(Direction direction);
 
@@ -203,7 +210,7 @@ public:
      * 
      * @return PVector2Grid current grid position
      */
-    PVector2Grid getGridPosition() const { return PVector2Grid((int) m_y % CASE_SIZE, (int) m_x % CASE_SIZE); }
+    PVector2Grid getGridPosition() const { return PVector2Grid((int) m_y / CASE_SIZE, (int) m_x / CASE_SIZE); }
 
     /**
      * @brief Get the Tile Value object
@@ -217,7 +224,7 @@ public:
      * 
      * @param tileValue new tile value
      */
-    void setTileValue(int tileValue) { this->m_currentPositionTileValue = tileValue; }
+    void setTileValue(int tileValue) { m_currentPositionTileValue = tileValue; }
 
 private:
 
