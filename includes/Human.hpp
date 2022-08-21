@@ -27,7 +27,7 @@ public:
     Human(std::string name, float x, float y, float speed) : Player(name, x, y, speed) {
         m_remainingLives = 3;
         m_isCollidingEnemy = false;
-        m_walkAnim = new Animation(3, name, "walk", true);
+        m_walkAnim = new Animation(3, name, "walk_right", true);
         m_deathAnim = new Animation(11, name, "death");
         m_currentAnim = m_walkAnim;
         setCurrentAnimation();
