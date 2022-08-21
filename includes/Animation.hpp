@@ -4,6 +4,8 @@
 #include <string>
 #include <iostream>
 
+#include "../includes/Constant.hpp"
+
 #include "SFML/Graphics.hpp"
 
 class Animation {
@@ -22,12 +24,12 @@ public:
         m_valueToInc = 0;
         for (int i = 1; i <= size; i++) {
             sf::Texture t;
-            t.loadFromFile("images/" + character + "/" + name + std::to_string(i) + ".png");
+            t.loadFromFile("images/" + character + "/" + name + std::to_string(i) + ".png", sf::IntRect(0, 0, CASE_SIZE, CASE_SIZE));
             m_textures.push_back(t);
         } if (reverse) 
             for (int i = 1; i < size-1; i++) {
                 sf::Texture t;
-                t.loadFromFile("images/" + character + "/" + name + std::to_string(size-i) + ".png");
+                t.loadFromFile("images/" + character + "/" + name + std::to_string(size-i) + ".png",  sf::IntRect(0, 0, CASE_SIZE, CASE_SIZE));
                 m_textures.push_back(t);
                 m_size++;
             }
