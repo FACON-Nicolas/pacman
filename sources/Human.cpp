@@ -6,10 +6,11 @@ Human::~Human() {
     delete m_deathAnim;
     delete m_walkRightAnim;
     delete m_walkLeftAnim;
+    delete m_walkTopAnim;
+    delete m_walkBottomAnim;
 }
 
 void Human::setCurrentAnimation() {
-    cout << "je suis passé par là" << endl;
     if (isCollided()) setCurrentAnimation(m_deathAnim);
     else {
         switch (getCurrentDirection()) {
@@ -18,6 +19,12 @@ void Human::setCurrentAnimation() {
                 break;
             case Direction::LEFT:
                 m_currentAnim = m_walkLeftAnim;
+                break;
+            case Direction::TOP:
+                m_currentAnim = m_walkTopAnim;
+                break;
+            case Direction::BOTTOM:
+                m_currentAnim = m_walkBottomAnim;
                 break;
         }
     }

@@ -29,6 +29,8 @@ public:
         m_isCollidingEnemy = false;
         m_walkLeftAnim = new Animation(3, name, "walk_left", true);
         m_walkRightAnim = new Animation(3, name, "walk_right", true);
+        m_walkTopAnim = new Animation(3, name, "walk_top", true);
+        m_walkBottomAnim = new Animation(3, name, "walk_bottom", true);
         m_deathAnim = new Animation(11, name, "death");
         m_currentAnim = m_walkRightAnim;
         setCurrentAnimation();
@@ -99,6 +101,18 @@ private:
      * 
      */
     Animation* m_walkLeftAnim;
+
+    /**
+     * @brief walk top anim
+     * 
+     */
+    Animation* m_walkTopAnim;
+
+    /**
+     * @brief walk bottom anim.
+     * 
+     */
+    Animation* m_walkBottomAnim;
     
 
 };
