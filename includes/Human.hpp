@@ -31,6 +31,7 @@ public:
         m_deathAnim = new Animation(11, name, "death");
         m_currentAnim = m_walkAnim;
         setCurrentAnimation();
+        setCurrentDirection(Direction::STOP);
     }
 
     sf::Texture* getTexture() const { return m_currentAnim->getTexture(); }
