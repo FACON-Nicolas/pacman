@@ -68,10 +68,35 @@ public:
      */
     sf::Sprite* getSprite() const { return m_sprite; }
 
+    /**
+     * @brief Set the Sprite object
+     * 
+     * @param sprite new sprite
+     */
     void setSprite(sf::Sprite* sprite) { m_sprite = sprite; }
 
+    /**
+     * @brief check if the next position could be used to update the movement
+     * 
+     * @param direction next direction.
+     * 
+     * @return true if the direction is valid
+     * 
+     * @return false if the direction is not valid
+     */
     bool nextDirectionIsValid(Direction direction);
 
+    /**
+     * @brief check if current and next direction are on the same axis.
+     * 
+     * Example : LEFT / RIGHT
+     * 
+     * @param direction next direction
+     * 
+     * @return true if they're on the same axis.
+     * 
+     * @return false if they're not on the same axis.
+     */
     bool nextDirectionIsOnSameAxis(Direction direction);
 
     /**
