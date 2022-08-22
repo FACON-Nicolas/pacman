@@ -88,6 +88,7 @@ void Window::updatePlayers() {
     m_pacman->getSprite()->setTexture(*m_pacman->getTexture());
     m_pacman->getSprite()->setPosition(m_pacman->getX(), m_pacman->getY());
     m_pacman->setTileValue(m_grid.get(PVector2Grid(m_pacman->getGridPosition())));
+    if (m_grid.getPacGum(m_pacman->getGridPosition()) != PacGum::EMPTY &&  m_pacman->isPerfectlyPositionned()) m_grid.setPacGum(m_pacman->getGridPosition(), PacGum::EMPTY);
 }
 
 void Window::initPacGums() {
@@ -115,6 +116,8 @@ void Window::drawPacGums() {
         if (m_grid.getPacGum(PVector2Grid(row, column)) != PacGum::EMPTY) draw(m_pacGumSprites[i]);
     }
 }
+
+
 
 int main() {
     Window w(sf::VideoMode(WINDOW_WIDTH, WINDOW_HEIGHT), "Pacman");
