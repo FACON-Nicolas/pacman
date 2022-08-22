@@ -34,3 +34,4 @@
 # Customs
 compile
 pacman_game
+sources/main.cpp
