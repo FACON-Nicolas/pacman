@@ -32,4 +32,5 @@
 *.app
 
 # Customs
-compile.sh
+compile
+pacman_game
