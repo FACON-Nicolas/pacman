@@ -35,6 +35,7 @@ void Window::update() {
     clear();
     drawGrid();
     updatePlayers();
+    drawPacGums();
     draw(*m_pacman->getSprite());
     display();
 }
@@ -87,6 +88,32 @@ void Window::updatePlayers() {
     m_pacman->getSprite()->setTexture(*m_pacman->getTexture());
     m_pacman->getSprite()->setPosition(m_pacman->getX(), m_pacman->getY());
     m_pacman->setTileValue(m_grid.get(PVector2Grid(m_pacman->getGridPosition())));
+}
+
+void Window::initPacGums() {
+    for (int i = 0; i < GRID_HEIGHT * GRID_WIDTH; i++) {
+        int row (i / GRID_WIDTH), column(i % GRID_WIDTH);
+        cout << row << " " << column << endl;
+        sf::Sprite sprite;
+        if (m_grid.getPacGum(PVector2Grid(row, column)) == PacGum::DOT) sprite.setTexture(m_pacGumTexture);
+        else sprite.setTexture(m_superPacGumTexture);
+        float x = CASE_SIZE * column + ((CASE_SIZE/2)); (sprite.getTexture()->getSize().x / 2);
+        float y = CASE_SIZE * row + ((CASE_SIZE/2)); + (sprite.getTexture()->getSize().y / 2);
+
+        if (m_grid.getPacGum(PVector2Grid(row, column)) == PacGum::ENERGIZER) {
+            x -= (sprite.getTexture()->getSize().x / 2);
+            y -= (sprite.getTexture()->getSize().y / 2);
+        }
+        sprite.setPosition(x, y);
+        m_pacGumSprites.push_back(sprite);
+    }
+}
+
+void Window::drawPacGums() {
+    for (int i = 0; i < GRID_HEIGHT * GRID_WIDTH; i++) {
+        int row(i / GRID_WIDTH), column(i % GRID_WIDTH);
+        if (m_grid.getPacGum(PVector2Grid(row, column)) != PacGum::EMPTY) draw(m_pacGumSprites[i]);
+    }
 }
 
 int main() {

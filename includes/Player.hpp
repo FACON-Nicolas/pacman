@@ -92,7 +92,7 @@ public:
      * 
      * @param x new m_x value
      */
-    void setX(float x) { m_x = ((int) x % (CASE_SIZE * (GRID_WIDTH-1))); }
+    void setX(float x) { m_x = ((int) x % (CASE_SIZE * (GRID_WIDTH))); }
 
     /**
      * @brief getter for m_y

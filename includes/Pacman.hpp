@@ -24,12 +24,16 @@ public:
      * Call the super constructor (sf::RenderWindow(sf::VideoMode, const sf::String&))
      * 
      * @param video videoMode
+     * 
      * @param title title of the window
      */
     Window(sf::VideoMode video, const sf::String& title) : sf::RenderWindow(video, title) {
         setFramerateLimit(FRAME_RATE);
+        m_pacGumTexture.loadFromFile("images/point.png");
+        m_superPacGumTexture.loadFromFile("images/coin.png");
         initGrid();
         initPlayers();
+        initPacGums();
         run();
     }
 
@@ -81,6 +85,18 @@ public:
      */
     void updatePlayers();
 
+    /**
+     * @brief init a vector of sprites for pacgums
+     * 
+     */
+    void initPacGums();
+
+    /**
+     * @brief draw the pacGums' sprites.
+     * 
+     */
+    void drawPacGums();
+
 private:
 
     /**
@@ -124,6 +140,24 @@ private:
      * 
      */
     Human* m_pacman;
+
+    /**
+     * @brief vector of sf::Sprites to draw pacgum Sprites
+     * 
+     */
+    std::vector<sf::Sprite> m_pacGumSprites;
+
+    /**
+     * @brief texture used to pacgumSprite.
+     * 
+     */
+    sf::Texture m_pacGumTexture;
+
+    /**
+     * @brief texture used to superPacgumSprite.
+     * 
+     */
+    sf::Texture m_superPacGumTexture;
 
 };
 

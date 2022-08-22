@@ -153,8 +153,11 @@ void Grid::initializePacGumGrid() {
     };
 
     for (int i = 0; i < GRID_HEIGHT; i++)
-        for (int j = 0; j < GRID_WIDTH; j++)
-            m_pacGumGrid[i][j] = static_cast<PacGum>(pacGumGrid[i][j]);
+        for (int j = 0; j < GRID_WIDTH; j++) {
+            if (pacGumGrid[i][j] == 0) m_pacGumGrid[i][j] = PacGum::EMPTY;
+            else if (pacGumGrid[i][j] == 1) m_pacGumGrid[i][j] = PacGum::DOT;
+            else m_pacGumGrid[i][j] = PacGum::ENERGIZER;
+        }
 }
 
 int Grid::getWeightBetweenNeighbors(PVector2Grid a, PVector2Grid b) {
