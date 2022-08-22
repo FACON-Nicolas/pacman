@@ -224,6 +224,23 @@ public:
      */
     void setTileValue(int tileValue) { m_currentPositionTileValue = tileValue; }
 
+    /**
+     * @brief Set the Grid object
+     * 
+     * @param grid new grid value
+     */
+    static void setGrid(Grid* grid) { 
+        delete Player::m_grid;
+        Player::m_grid = grid; 
+    }
+
+    /**
+     * @brief Get the Grid object
+     * 
+     * @return Grid new grid value
+     */
+    static Grid* getGrid() { return Player::m_grid; }
+
 private:
 
     /**
@@ -286,6 +303,11 @@ private:
      */
     int m_currentPositionTileValue;
 
+    /**
+     * @brief players' grid, static beacause all players are on the same grid.
+     * 
+     */
+    static inline Grid* m_grid = new Grid();
 };
 
 #endif //PLAYER_HPP

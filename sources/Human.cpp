@@ -42,4 +42,7 @@ void Human::update() {
     else if (m_currentAnim == m_walkRightAnim && m_currentAnim->isPaused() && getCurrentDirection() != Direction::STOP) 
         m_currentAnim->play();
     m_currentAnim->update();
+    setTileValue(getGrid()->get(PVector2Grid(getGridPosition())));
+    if (Player::getGrid()->getPacGum(getGridPosition()) != PacGum::EMPTY && isPerfectlyPositionned()) 
+        Player::getGrid()->setPacGum(getGridPosition(), PacGum::EMPTY);
 }

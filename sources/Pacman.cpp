@@ -81,14 +81,13 @@ void Window::keyboardControls(sf::Keyboard::Key key) {
 }
 
 void Window::initPlayers() {
+    Player::setGrid(&m_grid);
     m_pacman = new Human("pacman", 450, 855, NORMAL_SPEED);
 }
 
 void Window::updatePlayers() {
     m_pacman->getSprite()->setTexture(*m_pacman->getTexture());
     m_pacman->getSprite()->setPosition(m_pacman->getX(), m_pacman->getY());
-    m_pacman->setTileValue(m_grid.get(PVector2Grid(m_pacman->getGridPosition())));
-    if (m_grid.getPacGum(m_pacman->getGridPosition()) != PacGum::EMPTY &&  m_pacman->isPerfectlyPositionned()) m_grid.setPacGum(m_pacman->getGridPosition(), PacGum::EMPTY);
 }
 
 void Window::initPacGums() {
