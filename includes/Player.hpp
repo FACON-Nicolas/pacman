@@ -266,6 +266,20 @@ public:
      */
     static Grid* getGrid() { return Player::m_grid; }
 
+    /**
+     * @brief Get the Last Node object
+     * 
+     * @return int lastNode value
+     */
+    int getLastNode() const { return m_lastNode; }
+
+    /**
+     * @brief Set the Last Node object
+     * 
+     * @param lastNode new lastNode value
+     */
+    void setLastNode(int lastNode) { this->m_lastNode = lastNode; }
+
 private:
 
     /**
@@ -333,6 +347,12 @@ private:
      * 
      */
     static inline Grid* m_grid = new Grid();
+
+    /**
+     * @brief lastNode value.
+     * 
+     */
+    int m_lastNode;
 };
 
 #endif //PLAYER_HPP
