@@ -238,7 +238,7 @@ vector<int> Grid::getNodesValues() {
     vector<int> nodes;
     for (int i=0; i < GRID_HEIGHT; i++)
         for (int j = 0; j < GRID_WIDTH; j++)
-            if (isNode(PVector2Grid(i, j))) 
+            if (isNode(convertPV2(PVector2Grid(i, j)))) 
                 nodes.push_back(convertPV2(PVector2Grid(i, j)));
     return nodes;
 }

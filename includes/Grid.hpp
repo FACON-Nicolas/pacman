@@ -197,6 +197,13 @@ public:
      * @return PVertexDescriptor vertex
      */
     PVertexDescriptor getVertex(int node);
+
+        /**
+     * @brief return a container of nodes values.
+     * 
+     * @return vector<int> array of nodes
+     */
+    std::vector<int> getNodesValues();
     
 private:
 
@@ -222,13 +229,6 @@ private:
      * @return int the number of nodes
      */
     int getNumberOfNodesInGrid();
-
-    /**
-     * @brief return a container of nodes values.
-     * 
-     * @return vector<int> array of nodes
-     */
-    std::vector<int> getNodesValues();
 
     /**
      * @brief gives the edges value.
