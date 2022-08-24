@@ -1,4 +1,5 @@
 #include "../includes/Enemy.hpp"
+using namespace std;
 
 Enemy::~Enemy() {
     
@@ -9,28 +10,46 @@ int Enemy::getRandomNode() {
     return getGrid()->getNodesValues()[random];
 }
 
-std::vector<boost::graph_traits<PGraph>::vertex_descriptor> Enemy::getpathToPlayer() {
-    std::vector<boost::graph_traits<PGraph>::vertex_descriptor> path;
+vector<boost::graph_traits<PGraph>::vertex_descriptor> Enemy::getpathToPlayer() {
+    vector<boost::graph_traits<PGraph>::vertex_descriptor> path;
     path = getGrid()->dijkstraShortestPaths(getLastNode(), m_target->getLastNode());
     path.push_back(Grid::convertPV2(m_target->getGridPosition()));
     return path;
 }
 
-std::vector<boost::graph_traits<PGraph>::vertex_descriptor> Enemy::getpathToNextPlayerPosition() {
-    std::vector<boost::graph_traits<PGraph>::vertex_descriptor> path;
+vector<boost::graph_traits<PGraph>::vertex_descriptor> Enemy::getpathToNextPlayerPosition() {
+    vector<boost::graph_traits<PGraph>::vertex_descriptor> path;
     path = getGrid()->dijkstraShortestPaths(getLastNode(), m_target->getNextNode());
     return path;
 }
 
-std::vector<boost::graph_traits<PGraph>::vertex_descriptor> Enemy::getpathToRandom() {
-std::vector<boost::graph_traits<PGraph>::vertex_descriptor> path;
+vector<boost::graph_traits<PGraph>::vertex_descriptor> Enemy::getpathToRandom() {
+    vector<boost::graph_traits<PGraph>::vertex_descriptor> path;
     path = getGrid()->dijkstraShortestPaths(getLastNode(), getRandomNode());
+    return path;
 }
 
-std::vector<boost::graph_traits<PGraph>::vertex_descriptor> Enemy::getPath() {
-
+vector<boost::graph_traits<PGraph>::vertex_descriptor> Enemy::getPath() {
+    switch (m_targetType) {
+        case Target::PLAYER:
+            return getpathToPlayer();
+        case Target::NEXT_POS_PLAYER:
+            return getpathToNextPlayerPosition();
+        default:
+            return getpathToRandom();
+    }
 }
 
-std::vector<Direction> Enemy::transformPathInDirections() {
+Direction Enemy::fromNodesToDirection(int a, int b) {
+    if (a == b) return Direction::STOP;
+    else if (a > b) return (a / 1000 == b / 1000) ? Direction::LEFT : Direction::TOP;
+    else return (a / 1000 == b / 1000) ? Direction::RIGHT : Direction::BOTTOM;
+}
 
+vector<Direction> Enemy::transformPathInDirections() {
+    vector<boost::graph_traits<PGraph>::vertex_descriptor> path = getPath();
+    vector<Direction> directions;
+    for (auto it = path.begin(); it != path.end()-1; it++)
+        directions.push_back(fromNodesToDirection(*it, *(it+1)));
+    return directions;
 }

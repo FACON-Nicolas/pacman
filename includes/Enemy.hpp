@@ -1,8 +1,9 @@
 #ifndef ENEMY_HPP
 #define ENEMY_HPP
 
-#include "../includes/Player.hpp"
 #include "../includes/Human.hpp"
+#include "../includes/Player.hpp"
+#include "../includes/Target.hpp"
 
 #include <string>
 
@@ -22,7 +23,7 @@ public:
      * @param speed player's speed
      * 
      */
-    Enemy(std::string name, float x, float y, float speed) : Player(name, x, y, speed) {}
+    Enemy(std::string name, float x, float y, float speed, Target targetType) : Player(name, x, y, speed), m_targetType(targetType) {}
 
     /**
      * @brief Destroy the Enemy object
@@ -55,6 +56,17 @@ public:
      * @return std::vector<Direction> direction to follow from ghost to destination.
      */
     std::vector<Direction> transformPathInDirections();
+
+    /**
+     * @brief get a direction thanks to the start and the end (node A / B)
+     * 
+     * @param a start
+     * 
+     * @param b end
+     * 
+     * @return Direction direction to go from A to B.
+     */
+    static Direction fromNodesToDirection(int a, int b);
 
 private:
 
@@ -99,6 +111,11 @@ private:
      */
     static inline Human* m_target = new Human("pacman", 0, 0, 0);
 
+    /**
+     * @brief Target type, might be player, its next position or completely random.
+     * 
+     */
+    Target m_targetType;
 
 };
 
