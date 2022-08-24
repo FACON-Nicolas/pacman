@@ -126,7 +126,7 @@ public:
      * 
      * @return std::vector<boost::graph_traits<PGraph>::vertex_descriptor> Nodes on pathfinding
      */
-    std::vector<boost::graph_traits<PGraph>::vertex_descriptor> dijkstra_shortest_paths(int start, int end);
+    std::vector<boost::graph_traits<PGraph>::vertex_descriptor> dijkstraShortestPaths(int start, int end);
 
     /**
      * @brief check if a value is a node.

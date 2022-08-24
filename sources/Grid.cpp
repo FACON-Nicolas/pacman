@@ -17,7 +17,7 @@ void Grid::initializeVertices() {
         m_vertices.push_back(vertex(n, m_graph));
 }
 
-vector<boost::graph_traits<PGraph>::vertex_descriptor> Grid::dijkstra_shortest_paths(int start, int end) {
+vector<boost::graph_traits<PGraph>::vertex_descriptor> Grid::dijkstraShortestPaths(int start, int end) {
     auto startNode = getVertex(start);
     auto endNode = getVertex(end);
 
