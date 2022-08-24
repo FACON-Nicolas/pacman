@@ -23,7 +23,13 @@ public:
      * @param speed player's speed
      * 
      */
-    Enemy(std::string name, float x, float y, float speed, Target targetType) : Player(name, x, y, speed), m_targetType(targetType) {}
+    Enemy(std::string name, float x, float y, float speed, Target targetType) : Player(name, x, y, speed), m_targetType(targetType) {
+        m_enemyCounter++;
+        m_walkLeftAnim = new Animation(2, name, "left");
+        m_walkRightAnim = new Animation(2, name, "right");
+        m_walkTopAnim = new Animation(2, name, "top");
+        m_walkBottomAnim = new Animation(2, name, "bottom");
+    }
 
     /**
      * @brief Destroy the Enemy object
@@ -67,6 +73,12 @@ public:
      * @return Direction direction to go from A to B.
      */
     static Direction fromNodesToDirection(int a, int b);
+
+    /**
+     * @brief update method, called at each frame.
+     * 
+     */
+    void update();
 
 private:
 
@@ -116,6 +128,42 @@ private:
      * 
      */
     Target m_targetType;
+
+    /**
+     * @brief ptr to walk left 
+     * 
+     */
+    Animation* m_walkLeftAnim;
+
+    /**
+     * @brief ptr to walk right
+     * 
+     */
+    Animation* m_walkRightAnim;
+
+    /**
+     * @brief ptr to walk top
+     * 
+     */
+    Animation* m_walkTopAnim;
+
+    /**
+     * @brief ptr to walk bottom
+     * 
+     */
+    Animation* m_walkBottomAnim;
+
+    /**
+     * @brief ptr to walk randomly
+     * 
+     */
+    static inline Animation* m_walkRandomlyAnim = new Animation(2, "AI", "vulnerability");
+
+    /**
+     * @brief ghost counter, increments in constructor and decrements in destructor.
+     * 
+     */
+    static inline int m_enemyCounter = 0;
 
 };
 

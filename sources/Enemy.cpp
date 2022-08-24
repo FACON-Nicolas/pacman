@@ -2,7 +2,15 @@
 using namespace std;
 
 Enemy::~Enemy() {
-    
+    delete m_walkBottomAnim;
+    delete m_walkLeftAnim;
+    delete m_walkTopAnim;
+    delete m_walkBottomAnim;
+    m_enemyCounter--;
+    if (m_enemyCounter == 0) {
+        delete m_target;
+        delete m_walkRandomlyAnim;
+    }
 }
 
 int Enemy::getRandomNode() {
