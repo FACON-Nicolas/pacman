@@ -61,3 +61,23 @@ bool Player::nextDirectionIsOnSameAxis(Direction direction) {
         || (m_direction == Direction::TOP && direction == Direction::BOTTOM)
         || (m_direction == Direction::BOTTOM && direction == Direction::TOP);
 }
+
+int Player::getNextNode() {
+    int currentPos = Grid::convertPV2(getGridPosition());
+    while (!getGrid()->isNode(currentPos)) {
+        switch(getCurrentDirection()) {
+        case Direction::RIGHT:
+            currentPos += COLUMN_VALUE;
+            break;
+        case Direction::LEFT:
+            currentPos -= COLUMN_VALUE;
+            break;
+        case Direction::BOTTOM:
+            currentPos += ROW_VALUE;
+            break;
+        case Direction::TOP:
+            currentPos -= ROW_VALUE;
+            break;
+        }
+    } return currentPos;
+}

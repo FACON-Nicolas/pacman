@@ -280,6 +280,13 @@ public:
      */
     void setLastNode(int lastNode) { this->m_lastNode = lastNode; }
 
+    /**
+     * @brief thanks to the player position and player direction, this method gets the next node 
+     * 
+     * @return int next node 
+     */
+    int getNextNode();
+
 private:
 
     /**
