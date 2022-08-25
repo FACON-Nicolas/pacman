@@ -40,11 +40,9 @@ bool Grid::isNode(int node) {
 
 PVertexDescriptor Grid::getVertex(int node) {
     PVertexDescriptor v;
-    vector<int> nodes = getNodesValues();
-
-    for (vector<int>::iterator it = nodes.begin(); it != nodes.end(); it++)
+    for (vector<int>::iterator it = m_nodes.begin(); it != m_nodes.end(); it++)
         if (*it == node)
-            return m_vertices[it - nodes.begin()];
+            return m_vertices[it - m_nodes.begin()];
     throw invalid_argument("node not in graph.");
 }
 
@@ -185,8 +183,9 @@ void Grid::initializeGraph() {
     m_nodes = getNodesValues();
 
     int nodeValues[numberOfNodes];
+
     for (int i  = 0; i < numberOfNodes; i++)
-        nodeValues[i] = getNodesValues()[i];
+        nodeValues[i] = m_nodes[i];
 
     PEdge edgesValuesArray[edgesValues().size()];
     for (int i = 0; i < edgesValues().size(); i++)
@@ -238,7 +237,7 @@ vector<int> Grid::getNodesValues() {
     vector<int> nodes;
     for (int i=0; i < GRID_HEIGHT; i++)
         for (int j = 0; j < GRID_WIDTH; j++)
-            if (isNode(convertPV2(PVector2Grid(i, j)))) 
+            if (isNode(PVector2Grid(i, j)))
                 nodes.push_back(convertPV2(PVector2Grid(i, j)));
     return nodes;
 }
