@@ -29,6 +29,7 @@ public:
         m_walkRightAnim = new Animation(2, name, "right");
         m_walkTopAnim = new Animation(2, name, "top");
         m_walkBottomAnim = new Animation(2, name, "bottom");
+        m_currentAnimation = m_walkRightAnim;
     }
 
     /**
@@ -80,6 +81,14 @@ public:
      */
     void update();
 
+    /**
+     * @brief Set the Direction object
+     * 
+     */
+    void setDirection();
+
+    void setAnimation();
+
 private:
 
     /**
@@ -129,6 +138,8 @@ private:
      */
     Target m_targetType;
 
+    Animation* m_currentAnimation;
+
     /**
      * @brief ptr to walk left 
      * 
@@ -164,6 +175,12 @@ private:
      * 
      */
     static inline int m_enemyCounter = 0;
+
+    /**
+     * @brief path to go from A to B
+     * 
+     */
+    std::vector<Direction> m_path;
 
 };
 

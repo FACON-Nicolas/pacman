@@ -61,3 +61,28 @@ vector<Direction> Enemy::transformPathInDirections() {
         directions.push_back(fromNodesToDirection(*it, *(it+1)));
     return directions;
 }
+
+void Enemy::setDirection() {
+    if (m_path.empty()) setNextDirection(Direction::STOP);
+    else {
+        setNextDirection(*m_path.begin());
+        m_path.erase(m_path.begin());
+    } setAnimation();
+}
+
+void Enemy::setAnimation() {
+    // TODO: adapt this to vulnerability.
+    if (getCurrentDirection() == Direction::LEFT) m_currentAnimation = m_walkLeftAnim;
+    else if (getCurrentDirection() == Direction::RIGHT) m_currentAnimation = m_walkRightAnim;
+    else if (getCurrentDirection() == Direction::TOP) m_currentAnimation = m_walkTopAnim;
+    else if (getCurrentDirection() == Direction::BOTTOM) m_currentAnimation = m_walkBottomAnim;
+}
+
+void Enemy::update() {
+    if (isPerfectlyPositionned()) {
+        if (getGrid()->isNode(Grid::convertPV2(getGridPosition()))) {
+            setLastNode(Grid::convertPV2(getGridPosition()));
+            m_path = transformPathInDirections();
+        } setDirection();
+    }
+}
