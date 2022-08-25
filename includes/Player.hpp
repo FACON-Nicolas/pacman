@@ -33,6 +33,8 @@ public:
         m_x = x;
         m_y = y;
         m_speed = speed;
+        setLastNode(Grid::convertPV2(getGridPosition()));
+
     }
 
     /**
@@ -66,7 +68,7 @@ public:
      * 
      * @return sf::Sprite currentSprite
      */
-    sf::Sprite* getSprite() const { return m_sprite; }
+    sf::Sprite* getSprite() { return m_sprite; }
 
     /**
      * @brief Set the Sprite object
@@ -233,14 +235,17 @@ public:
      * 
      * @return PVector2Grid current grid position
      */
-    PVector2Grid getGridPosition() const { return PVector2Grid((int) m_y / CASE_SIZE, (int) m_x / CASE_SIZE); }
+    PVector2Grid getGridPosition() const { 
+        PVector2Grid pos(getY()/CASE_SIZE, getX()/CASE_SIZE);
+        return pos;
+    }
 
     /**
      * @brief Get the Tile Value object
      * 
      * @return int current tile value
      */
-    int getTileValue() const { return m_currentPositionTileValue; }
+    int getTileValue() { return m_currentPositionTileValue; }
 
     /**
      * @brief Set the Tile Value object
@@ -271,7 +276,7 @@ public:
      * 
      * @return int lastNode value
      */
-    int getLastNode() const { return m_lastNode; }
+    int getLastNode()  { return m_lastNode; }
 
     /**
      * @brief Set the Last Node object
@@ -353,7 +358,7 @@ private:
      * @brief players' grid, static beacause all players are on the same grid.
      * 
      */
-    static inline Grid* m_grid = new Grid();
+    static inline Grid* m_grid = nullptr;
 
     /**
      * @brief lastNode value.
