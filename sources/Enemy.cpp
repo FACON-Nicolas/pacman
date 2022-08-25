@@ -49,16 +49,22 @@ vector<boost::graph_traits<PGraph>::vertex_descriptor> Enemy::getPath() {
 }
 
 Direction Enemy::fromNodesToDirection(int a, int b) {
-    if (a == b) return Direction::STOP;
-    else if (a > b) return (a / 1000 == b / 1000) ? Direction::LEFT : Direction::TOP;
-    else return (a / 1000 == b / 1000) ? Direction::RIGHT : Direction::BOTTOM;
+    if (a < b) {
+        if (a / 1000 != b / 1000) return Direction::BOTTOM;
+        else return Direction::RIGHT;
+    } else if (a > b) {
+        if (a / 1000 != b / 1000) return Direction::TOP;
+        else return Direction::LEFT;
+    } return Direction::STOP;
 }
 
 vector<Direction> Enemy::transformPathInDirections() {
     vector<boost::graph_traits<PGraph>::vertex_descriptor> path = getPath();
     vector<Direction> directions;
-    for (auto it = path.begin(); it != path.end()-1; it++)
+    //directions.push_back(Direction::STOP);
+    for (auto it = path.rbegin()+1; it != path.rend()-1; it++)
         directions.push_back(fromNodesToDirection(*it, *(it+1)));
+    directions.push_back(Direction::STOP);
     return directions;
 }
 
@@ -76,13 +82,21 @@ void Enemy::setAnimation() {
     else if (getCurrentDirection() == Direction::RIGHT) m_currentAnimation = m_walkRightAnim;
     else if (getCurrentDirection() == Direction::TOP) m_currentAnimation = m_walkTopAnim;
     else if (getCurrentDirection() == Direction::BOTTOM) m_currentAnimation = m_walkBottomAnim;
+    setSprite(m_currentAnimation->getSprite());
 }
 
 void Enemy::update() {
     if (isPerfectlyPositionned()) {
-        if (getGrid()->isNode(Grid::convertPV2(getGridPosition()))) {
-            setLastNode(Grid::convertPV2(getGridPosition()));
-            m_path = transformPathInDirections();
-        } setDirection();
+        int pos = getGrid()->convertPV2(getGridPosition());
+        if (getGrid()->isNode(pos)) {
+            setLastNode(pos);
+            if (m_target != nullptr)
+                m_path = transformPathInDirections();
+            setDirection();
+        }
     }
+    setTileValue(getGrid()->get(getGridPosition()));
+    m_currentAnimation->update();
+    setAnimation();
+    move();
 }

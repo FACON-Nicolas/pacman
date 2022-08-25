@@ -30,6 +30,12 @@ public:
         m_walkTopAnim = new Animation(2, name, "top");
         m_walkBottomAnim = new Animation(2, name, "bottom");
         m_currentAnimation = m_walkRightAnim;
+        std::cout << "right: " << (fromNodesToDirection(0, 180) == Direction::RIGHT) << std::endl;
+        std::cout << "left: " << (fromNodesToDirection(180, 0) == Direction::LEFT) << std::endl;
+        std::cout << "top: " << (fromNodesToDirection(3000, 0) == Direction::TOP) << std::endl;
+        std::cout << "bottom: " << (fromNodesToDirection(0, 3000) == Direction::BOTTOM) << std::endl;
+        std::cout << "stop: " << (fromNodesToDirection(0, 0) == Direction::STOP) << std::endl;
+        setAnimation();
     }
 
     /**
@@ -37,6 +43,8 @@ public:
      * 
      */
     virtual ~Enemy();
+
+    sf::Texture* getTexture() const { return m_currentAnimation->getTexture(); }
 
     /**
      * @brief Get the Target object
@@ -51,7 +59,7 @@ public:
      * @param target new target Value
      */
     static void setTarget(Human* target) {
-        delete m_target;
+        if (m_target != nullptr) delete m_target;
         m_target = target;
     }
 
@@ -87,6 +95,10 @@ public:
      */
     void setDirection();
 
+    /**
+     * @brief Set the Animation object
+     * 
+     */
     void setAnimation();
 
 private:
@@ -130,7 +142,7 @@ private:
      * @brief target value, static because all Enemy have the same target.
      * 
      */
-    static inline Human* m_target = new Human("pacman", 0, 0, 0);
+    static inline Human* m_target = nullptr;
 
     /**
      * @brief Target type, might be player, its next position or completely random.
