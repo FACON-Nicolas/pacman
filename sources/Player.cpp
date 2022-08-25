@@ -63,7 +63,6 @@ bool Player::nextDirectionIsOnSameAxis(Direction direction) {
 }
 
 int Player::getNextNode() {
-    cout << (m_grid != nullptr) << endl;
     int currentPos = Grid::convertPV2(getGridPosition());
     while (!getGrid()->isNode(currentPos)) {
         switch(getCurrentDirection()) {
