@@ -4,12 +4,14 @@ using namespace std;
 Window::~Window() {
     cout << "Window deleted successfully" << endl;
     delete m_pacman;
+    delete m_blinky;
 }
 
 void Window::run() {
     while (isOpen()) {
         event();
         m_pacman->update();
+        m_blinky->update();
         update();
     }
 }
@@ -37,6 +39,7 @@ void Window::update() {
     updatePlayers();
     drawPacGums();
     draw(*m_pacman->getSprite());
+    draw(*m_blinky->getSprite());
     display();
 }
 
@@ -82,18 +85,22 @@ void Window::keyboardControls(sf::Keyboard::Key key) {
 
 void Window::initPlayers() {
     Player::setGrid(&m_grid);
-    m_pacman = new Human("pacman", 450, 855, NORMAL_SPEED);
+    m_pacman = new Human("pacman", 495, 855, NORMAL_SPEED);
+    m_blinky = new Enemy("blinky", 0, 0, NORMAL_SPEED, Target::PLAYER);
+    Enemy::setTarget(m_pacman);
 }
 
 void Window::updatePlayers() {
     m_pacman->getSprite()->setTexture(*m_pacman->getTexture());
     m_pacman->getSprite()->setPosition(m_pacman->getX(), m_pacman->getY());
+    m_blinky->getSprite()->setTexture(*m_blinky->getTexture());
+    m_blinky->getSprite()->setPosition(m_blinky->getX(), m_blinky->getY());
+
 }
 
 void Window::initPacGums() {
     for (int i = 0; i < GRID_HEIGHT * GRID_WIDTH; i++) {
         int row (i / GRID_WIDTH), column(i % GRID_WIDTH);
-        cout << row << " " << column << endl;
         sf::Sprite sprite;
         if (m_grid.getPacGum(PVector2Grid(row, column)) == PacGum::DOT) sprite.setTexture(m_pacGumTexture);
         else sprite.setTexture(m_superPacGumTexture);
@@ -119,5 +126,6 @@ void Window::drawPacGums() {
 
 
 int main() {
+    cout << "PANCAKES GOOOOOOO" << endl;
     Window w(sf::VideoMode(WINDOW_WIDTH, WINDOW_HEIGHT), "Pacman");
 }

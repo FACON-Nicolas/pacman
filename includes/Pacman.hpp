@@ -4,6 +4,7 @@
 #include "SFML/Graphics.hpp"
 #include "../includes/Grid.hpp"
 #include "../includes/Human.hpp"
+#include "../includes/Enemy.hpp"
 #include "../includes/Constant.hpp"
 
 #include <cmath>
@@ -140,6 +141,12 @@ private:
      * 
      */
     Human* m_pacman;
+
+    /**
+     * @brief blinky ghost
+     * 
+     */
+    Enemy* m_blinky;
 
     /**
      * @brief vector of sf::Sprites to draw pacgum Sprites
