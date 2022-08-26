@@ -8,7 +8,7 @@
 #include <cmath>
 
 /**
- * @brief 
+ * @brief tile value, can store tile value to know if a wall is present.
  * 
  */
 class Tile {

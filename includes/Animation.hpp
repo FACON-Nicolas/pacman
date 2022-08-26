@@ -8,6 +8,10 @@
 
 #include "SFML/Graphics.hpp"
 
+/**
+ * @brief Animation class is used to sort textures in an array and link them to a sprite to make an animation.
+ * 
+ */
 class Animation {
 
 public:
@@ -133,8 +137,16 @@ private:
      */
     std::string m_character;
 
+    /**
+     * @brief at each time m_valueToInc will be % m_dividerUpdate, then the sprite's texture will change
+     * 
+     */
     static inline int m_dividerUpdate = 5;
 
+    /**
+     * @brief value to increment at each update method calls.
+     * 
+     */
     int m_valueToInc;
     
 };

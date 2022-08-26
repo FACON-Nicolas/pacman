@@ -58,10 +58,29 @@ public:
      */
     void update();
 
+    /**
+     * @brief check if pacman is collided
+     * 
+     * @return true if it is collided
+     * 
+     * @return false if it is not collided
+     */
     bool isCollided() const { return m_isCollidingEnemy; }
 
+    /**
+     * @brief check if pacman is alive
+     * 
+     * @return true if pacman is alive
+     * 
+     * @return false if pacman is alive
+     */
     bool isAlive();
 
+    /**
+     * @brief Set the Current Animation object
+     * 
+     * @param animation new anim value
+     */
     void setCurrentAnimation(Animation* animation) { m_currentAnim = animation; }
 
 private:

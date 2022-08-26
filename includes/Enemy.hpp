@@ -7,6 +7,10 @@
 
 #include <string>
 
+/**
+ * @brief enemy class inherited from player class, is a class used by pacman ghost to find pacman.
+ * 
+ */
 class Enemy : public Player {
 
 public:
@@ -145,6 +149,10 @@ private:
      */
     Target m_targetType;
 
+    /**
+     * @brief ptr to current anim.
+     * 
+     */
     Animation* m_currentAnimation;
 
     /**

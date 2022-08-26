@@ -292,6 +292,11 @@ public:
      */
     int getNextNode();
 
+    /**
+     * @brief Get the Name object
+     * 
+     * @return std::string name value
+     */
     std::string getName() { return m_name; }
 
 private:

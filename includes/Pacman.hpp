@@ -148,6 +148,10 @@ private:
      */
     Enemy* m_blinky;
 
+    /**
+     * @brief pinky ghost
+     * 
+     */
     Enemy* m_pinky;
 
     /**
