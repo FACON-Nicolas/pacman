@@ -123,8 +123,6 @@ void Window::drawPacGums() {
     }
 }
 
-
-
 int main() {
     cout << "PANCAKES GOOOOOOO" << endl;
     Window w(sf::VideoMode(WINDOW_WIDTH, WINDOW_HEIGHT), "Pacman");

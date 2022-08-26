@@ -68,9 +68,11 @@ int Player::getNextNode() {
         switch(getCurrentDirection()) {
         case Direction::RIGHT:
             currentPos++;
+            if (currentPos % 1000 >= GRID_WIDTH) currentPos -= currentPos % 1000;
             break;
         case Direction::LEFT:
             currentPos--;
+            if (currentPos / 1000 != (currentPos+1) / 1000) currentPos += GRID_WIDTH;
             break;
         case Direction::BOTTOM:
             currentPos += ROW_VALUE;

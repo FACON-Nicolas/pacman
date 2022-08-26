@@ -20,7 +20,8 @@ int Enemy::getRandomNode() {
 
 vector<boost::graph_traits<PGraph>::vertex_descriptor> Enemy::getpathToPlayer() {
     vector<boost::graph_traits<PGraph>::vertex_descriptor> path;
-    path = getGrid()->dijkstraShortestPaths(getLastNode(), m_target->getLastNode());
+    int dest = (m_target->getLastNode() == getLastNode()) ? m_target->getNextNode() : m_target->getLastNode();
+    path = getGrid()->dijkstraShortestPaths(getLastNode(), dest);
     path.push_back(Grid::convertPV2(m_target->getGridPosition()));
     return path;
 }
