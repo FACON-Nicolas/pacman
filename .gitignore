@@ -36,3 +36,4 @@ compile
 debug
 pacman_game
 sources/main.cpp
+*.vscode/
