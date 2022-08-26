@@ -8,7 +8,6 @@
  * Used in a graph implementation to know the AI path between
  * a start and destination point.  
  * 
- * 
  */
 enum class Direction : int {
 
