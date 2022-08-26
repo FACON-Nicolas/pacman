@@ -2,13 +2,14 @@
 using namespace std;
 
 Enemy::~Enemy() {
+    m_currentAnimation = nullptr;
     delete m_walkBottomAnim;
     delete m_walkLeftAnim;
     delete m_walkTopAnim;
-    delete m_walkBottomAnim;
+    delete m_walkRightAnim;
     m_enemyCounter--;
     if (m_enemyCounter == 0) {
-        delete m_target;
+        m_target = nullptr;
         delete m_walkRandomlyAnim;
     }
 }

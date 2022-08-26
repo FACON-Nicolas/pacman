@@ -2,7 +2,7 @@
 using namespace std;
 
 Human::~Human() {
-    delete m_currentAnim;
+    m_currentAnim = nullptr;
     delete m_deathAnim;
     delete m_walkRightAnim;
     delete m_walkLeftAnim;

@@ -6,7 +6,7 @@ bool Player::isCollidingPlayer(Player player) {
 }
 
 Player::~Player() {
-    delete m_sprite;
+    m_sprite = nullptr;
 }
 
 bool Player::isPerfectlyPositionned() {
