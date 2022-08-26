@@ -2,7 +2,6 @@
 using namespace std;
 
 Window::~Window() {
-    cout << "Window deleted successfully" << endl;
     delete m_pacman;
     delete m_blinky;
 }
@@ -20,8 +19,7 @@ void Window::run() {
 void Window::event() {
     sf::Event m_event;
     while(pollEvent(m_event)) {
-        switch (m_event.type)
-        {
+        switch (m_event.type) {
         case sf::Event::Closed:
             close();
             break;
@@ -128,6 +126,5 @@ void Window::drawPacGums() {
 }
 
 int main() {
-    cout << "PANCAKES GOOOOOOO" << endl;
     Window w(sf::VideoMode(WINDOW_WIDTH, WINDOW_HEIGHT), "Pacman");
 }
