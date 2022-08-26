@@ -24,7 +24,13 @@ enum class Target {
      * @brief if target is RANDOM, the ghost follows a random direction.
      * 
      */
-    RANDOM
+    RANDOM,
+
+    /**
+     * @brief alternate is a value that switch between PLAYER and RANDOM.
+     * 
+     */
+    ALTERNATE
 
 };
 
