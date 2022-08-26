@@ -40,14 +40,16 @@ vector<boost::graph_traits<PGraph>::vertex_descriptor> Enemy::getpathToRandom() 
 }
 
 vector<boost::graph_traits<PGraph>::vertex_descriptor> Enemy::getPath() {
-    switch (m_targetType) {
-        case Target::PLAYER:
-            return getpathToPlayer();
-        case Target::NEXT_POS_PLAYER:
-            return getpathToNextPlayerPosition();
-        default:
-            return getpathToRandom();
-    }
+    if (!m_isVunerable) {
+        switch (m_targetType) {
+            case Target::PLAYER:
+                return getpathToPlayer();
+            case Target::NEXT_POS_PLAYER:
+                return getpathToNextPlayerPosition();
+            default:
+                return getpathToRandom();
+        }
+    } else return getpathToRandom();
 }
 
 Direction Enemy::fromNodesToDirection(int a, int b) {
@@ -79,13 +81,40 @@ void Enemy::setDirection() {
     } setAnimation();
 }
 
+void Enemy::changeVulnerability() {
+    auto time = chrono::duration_cast<chrono::seconds>(chrono::system_clock::now()-m_timeStart).count();
+    if (!m_isVunerable) {
+        m_isVunerable = true;
+        m_currentAnimation = m_walkRandomlyAnim;
+        reverseDirection();
+        setSpeed(VULNERABILITY_SPEED);
+        m_timeStart = chrono::system_clock::now();
+    } else if (time >= 10) {
+        m_isVunerable = false;
+        setAnimation();
+        setX(getX() - ((int) getX() % NORMAL_SPEED));
+        setY(getY() - ((int) getY() % NORMAL_SPEED));
+        setSpeed(NORMAL_SPEED);
+    }
+}
+
 void Enemy::setAnimation() {
-    // TODO: adapt this to vulnerability.
-    if (getCurrentDirection() == Direction::LEFT) m_currentAnimation = m_walkLeftAnim;
-    else if (getCurrentDirection() == Direction::RIGHT) m_currentAnimation = m_walkRightAnim;
-    else if (getCurrentDirection() == Direction::TOP) m_currentAnimation = m_walkTopAnim;
-    else if (getCurrentDirection() == Direction::BOTTOM) m_currentAnimation = m_walkBottomAnim;
-    setSprite(m_currentAnimation->getSprite());
+    //adapt to is eaten
+    if (m_target->getLastPacgum() == PacGum::ENERGIZER) changeVulnerability();
+    else if (!m_isVunerable) {
+        if  (getCurrentDirection() == Direction::LEFT) m_currentAnimation = m_walkLeftAnim;
+        else if (getCurrentDirection() == Direction::RIGHT) m_currentAnimation = m_walkRightAnim;
+        else if (getCurrentDirection() == Direction::TOP) m_currentAnimation = m_walkTopAnim;
+        else if (getCurrentDirection() == Direction::BOTTOM) m_currentAnimation = m_walkBottomAnim;
+    } setSprite(m_currentAnimation->getSprite());
+}
+
+void Enemy::reverseDirection() {
+    if (getCurrentDirection() == Direction::LEFT) setCurrentDirection(Direction::RIGHT);
+    else if (getCurrentDirection() == Direction::RIGHT) setCurrentDirection(Direction::LEFT);
+    else if (getCurrentDirection() == Direction::TOP) setCurrentDirection(Direction::BOTTOM);
+    else if (getCurrentDirection() == Direction::BOTTOM) setCurrentDirection(Direction::TOP);
+    else setCurrentDirection(Direction::STOP);
 }
 
 void Enemy::update() {
@@ -100,6 +129,7 @@ void Enemy::update() {
     }
     setTileValue(getGrid()->get(getGridPosition()));
     m_currentAnimation->update();
+    if (m_isVunerable) changeVulnerability();
     setAnimation();
     move();
 }
