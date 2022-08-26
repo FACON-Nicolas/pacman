@@ -36,6 +36,7 @@ public:
         setCurrentAnimation();
         setCurrentDirection(Direction::STOP);
         setNextDirection(Direction::STOP);
+        setLastPacGum(PacGum::EMPTY);
     }
 
     sf::Texture* getTexture() const { return m_currentAnim->getTexture(); }
@@ -82,6 +83,20 @@ public:
      * @param animation new anim value
      */
     void setCurrentAnimation(Animation* animation) { m_currentAnim = animation; }
+
+    /**
+     * @brief Get the Last Pacgum object
+     * 
+     * @return PacGum last pacgum value
+     */
+    PacGum getLastPacgum() const { return m_lastPacGum; }
+
+    /**
+     * @brief Set the Last Pac Gum object
+     * 
+     * @param pacgum new last pacgum value
+     */
+    void setLastPacGum(PacGum pacgum) { this->m_lastPacGum = pacgum; }
 
 private:
 
@@ -133,7 +148,11 @@ private:
      */
     Animation* m_walkBottomAnim;
     
-
+    /**
+     * @brief last pacgum eaten, value change each time pacman is fed.
+     * 
+     */
+    PacGum m_lastPacGum;
 };
 
 #endif //HUMAN_HPP

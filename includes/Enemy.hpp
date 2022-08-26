@@ -33,8 +33,10 @@ public:
         m_walkRightAnim = new Animation(2, name, "right");
         m_walkTopAnim = new Animation(2, name, "top");
         m_walkBottomAnim = new Animation(2, name, "bottom");
+        m_walkRandomlyAnim = new Animation(2, "AI", "vulnerability");
         m_currentAnimation = m_walkRightAnim;
-        setAnimation();
+        m_isVunerable = false;
+        m_startPos = getGridPosition();
     }
 
     /**
@@ -99,6 +101,29 @@ public:
      * 
      */
     void setAnimation();
+
+    /**
+     * @brief reverse enemy direction.
+     * 
+     * RIGHT    =>   LEFT
+     * TOP      =>   BOTTOM
+     * LEFT     =>   RIGHT
+     * BOTTOM   =>   TOP
+     * 
+     */
+    void reverseDirection();
+
+    /**
+     * @brief change vulnerabilty of enemy
+     * 
+     */
+    void changeVulnerability();
+
+    /**
+     * @brief Set the Vulnerability object
+     * 
+     */
+    void setVulnerability();
 
 private:
 
@@ -183,7 +208,7 @@ private:
      * @brief ptr to walk randomly
      * 
      */
-    static inline Animation* m_walkRandomlyAnim = new Animation(2, "AI", "vulnerability");
+    Animation* m_walkRandomlyAnim;
 
     /**
      * @brief ghost counter, increments in constructor and decrements in destructor.
@@ -196,6 +221,24 @@ private:
      * 
      */
     std::vector<Direction> m_path;
+
+    /**
+     * @brief time start
+     * 
+     */
+    std::chrono::system_clock::time_point m_timeStart;
+
+    /**
+     * @brief defines if pacman could eat the enemy
+     * 
+     */
+    bool m_isVunerable;
+
+    /**
+     * @brief start pos in grid.
+     * 
+     */
+    PVector2Grid m_startPos;
 
 };
 

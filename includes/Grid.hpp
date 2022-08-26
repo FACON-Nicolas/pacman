@@ -204,6 +204,20 @@ public:
      * @return vector<int> array of nodes
      */
     std::vector<int> getNodesValues();
+
+    /**
+     * @brief check if the grid is empty
+     * 
+     * @return true if there's no pacgum
+     * @return false if there's at least 1 pacgum
+     */
+    bool isEmpty() { return m_pacGumCount == 0; }
+
+    /**
+     * @brief decrement m_pacGumCount
+     * 
+     */
+    void decrementPacGumCount() { --m_pacGumCount; }
     
 private:
 
@@ -329,6 +343,8 @@ private:
      * 
      */
     std::vector<PVertexDescriptor> m_vertices;
+
+    int m_pacGumCount;
 };
 
 #endif //GRID_HPP

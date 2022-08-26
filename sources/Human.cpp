@@ -50,10 +50,13 @@ void Human::update() {
 
     //tile value
     setTileValue(getGrid()->get(PVector2Grid(getGridPosition())));
+    if (getLastPacgum() == PacGum::ENERGIZER) setLastPacGum(PacGum::EMPTY);
 
     //pacgum
-    if (Player::getGrid()->getPacGum(getGridPosition()) != PacGum::EMPTY && isPerfectlyPositionned()) 
+    if (Player::getGrid()->getPacGum(getGridPosition()) != PacGum::EMPTY && isPerfectlyPositionned()) {
+        m_lastPacGum = getGrid()->getPacGum(getGridPosition());
         Player::getGrid()->setPacGum(getGridPosition(), PacGum::EMPTY);
+    }
 
     // last node
     if (Player::getGrid()->isNode(getGrid()->convertPV2(getGridPosition()))) setLastNode(getGrid()->convertPV2(getGridPosition())); 

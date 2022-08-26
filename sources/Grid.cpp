@@ -150,11 +150,16 @@ void Grid::initializePacGumGrid() {
                     {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1}
     };
 
+    m_pacGumCount = 0;
+
     for (int i = 0; i < GRID_HEIGHT; i++)
         for (int j = 0; j < GRID_WIDTH; j++) {
             if (pacGumGrid[i][j] == 0) m_pacGumGrid[i][j] = PacGum::EMPTY;
-            else if (pacGumGrid[i][j] == 1) m_pacGumGrid[i][j] = PacGum::DOT;
-            else m_pacGumGrid[i][j] = PacGum::ENERGIZER;
+            else{
+                if (pacGumGrid[i][j] == 1) m_pacGumGrid[i][j] = PacGum::DOT;
+                else m_pacGumGrid[i][j] = PacGum::ENERGIZER;
+                m_pacGumCount++;
+            }
         }
 }
 
