@@ -12,6 +12,7 @@ void Window::run() {
         event();
         m_pacman->update();
         m_blinky->update();
+        m_pinky->update();
         update();
     }
 }
@@ -40,6 +41,7 @@ void Window::update() {
     drawPacGums();
     draw(*m_pacman->getSprite());
     draw(*m_blinky->getSprite());
+    draw(*m_pinky->getSprite());
     display();
 }
 
@@ -86,7 +88,8 @@ void Window::keyboardControls(sf::Keyboard::Key key) {
 void Window::initPlayers() {
     Player::setGrid(&m_grid);
     m_pacman = new Human("pacman", 495, 855, NORMAL_SPEED);
-    m_blinky = new Enemy("blinky", 0, 0, NORMAL_SPEED, Target::PLAYER);
+    m_blinky = new Enemy("blinky", 6 * CASE_SIZE, 7 * CASE_SIZE, NORMAL_SPEED, Target::PLAYER);
+    m_pinky = new Enemy("pinky", 14*CASE_SIZE, 7*CASE_SIZE, NORMAL_SPEED, Target::NEXT_POS_PLAYER);
     Enemy::setTarget(m_pacman);
 }
 
@@ -95,7 +98,8 @@ void Window::updatePlayers() {
     m_pacman->getSprite()->setPosition(m_pacman->getX(), m_pacman->getY());
     m_blinky->getSprite()->setTexture(*m_blinky->getTexture());
     m_blinky->getSprite()->setPosition(m_blinky->getX(), m_blinky->getY());
-
+    m_pinky->getSprite()->setTexture(*m_pinky->getTexture());
+    m_pinky->getSprite()->setPosition(m_pinky->getX(), m_pinky->getY());  
 }
 
 void Window::initPacGums() {

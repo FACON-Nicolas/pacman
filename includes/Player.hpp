@@ -292,6 +292,8 @@ public:
      */
     int getNextNode();
 
+    std::string getName() { return m_name; }
+
 private:
 
     /**

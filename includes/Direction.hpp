@@ -16,31 +16,31 @@ enum class Direction : int {
      * @brief top value
      * 
      */
-    TOP,
+    TOP = 1,
 
     /**
      * @brief right value
      * 
      */
-    RIGHT,
+    RIGHT = 2,
 
     /**
      * @brief bottom value
      * 
      */
-    BOTTOM,
+    BOTTOM = 4,
 
     /**
      * @brief left value
      * 
      */
-    LEFT, 
+    LEFT = 8, 
 
     /**
      * @brief stop value
      * 
      */
-    STOP
+    STOP = 0
     
 };
 

@@ -148,6 +148,8 @@ private:
      */
     Enemy* m_blinky;
 
+    Enemy* m_pinky;
+
     /**
      * @brief vector of sf::Sprites to draw pacgum Sprites
      * 

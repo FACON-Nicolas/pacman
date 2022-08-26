@@ -63,9 +63,10 @@ vector<Direction> Enemy::transformPathInDirections() {
     vector<boost::graph_traits<PGraph>::vertex_descriptor> path = getPath();
     vector<Direction> directions;
     //directions.push_back(Direction::STOP);
-    for (auto it = path.rbegin()+1; it != path.rend()-1; it++)
+    for (auto it = path.rbegin(); it != path.rend()-1; it++)
         directions.push_back(fromNodesToDirection(*it, *(it+1)));
     directions.push_back(Direction::STOP);
+    if (getName() == "blinky") directions.erase(directions.begin());
     return directions;
 }
 
