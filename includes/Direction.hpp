@@ -5,8 +5,8 @@
  * @brief Direction enum, used to choice a direction
  * for players and AIs.
  * 
- * Used in a graph implementation to know the AI path between
- * a start and destination point.  
+ * Used in a graph implementation to know the AI path from
+ * a start to destination point.  
  * 
  */
 enum class Direction : int {

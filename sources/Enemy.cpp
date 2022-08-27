@@ -99,7 +99,6 @@ void Enemy::changeVulnerability() {
 }
 
 void Enemy::setAnimation() {
-    //adapt to is eaten
     if (m_target->getLastPacgum() == PacGum::ENERGIZER) changeVulnerability();
     else if (!m_isVunerable) {
         if  (getCurrentDirection() == Direction::LEFT) m_currentAnimation = m_walkLeftAnim;

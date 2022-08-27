@@ -344,6 +344,10 @@ private:
      */
     std::vector<PVertexDescriptor> m_vertices;
 
+    /**
+     * @brief pacgum remaining in the grid.
+     * 
+     */
     int m_pacGumCount;
 };
 
