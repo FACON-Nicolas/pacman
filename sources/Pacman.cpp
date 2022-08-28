@@ -4,6 +4,7 @@ using namespace std;
 Window::~Window() {
     delete m_pacman;
     delete m_blinky;
+    delete m_clyde;
 }
 
 void Window::run() {
@@ -12,6 +13,7 @@ void Window::run() {
         m_pacman->update();
         m_blinky->update();
         m_pinky->update();
+        m_clyde->update();
         update();
     }
 }
@@ -40,6 +42,7 @@ void Window::update() {
     draw(*m_pacman->getSprite());
     draw(*m_blinky->getSprite());
     draw(*m_pinky->getSprite());
+    draw(*m_clyde->getSprite());
     display();
 }
 
@@ -88,6 +91,7 @@ void Window::initPlayers() {
     m_pacman = new Human("pacman", 495, 855, NORMAL_SPEED);
     m_blinky = new Enemy("blinky", 6 * CASE_SIZE, 7 * CASE_SIZE, NORMAL_SPEED, Target::PLAYER);
     m_pinky = new Enemy("pinky", 14*CASE_SIZE, 7*CASE_SIZE, NORMAL_SPEED, Target::NEXT_POS_PLAYER);
+    m_clyde = new Enemy("clyde", 11 * CASE_SIZE, 7*CASE_SIZE, NORMAL_SPEED, Target::ALTERNATE);
     Enemy::setTarget(m_pacman);
 }
 
@@ -98,6 +102,8 @@ void Window::updatePlayers() {
     m_blinky->getSprite()->setPosition(m_blinky->getX(), m_blinky->getY());
     m_pinky->getSprite()->setTexture(*m_pinky->getTexture());
     m_pinky->getSprite()->setPosition(m_pinky->getX(), m_pinky->getY());  
+    m_clyde->getSprite()->setTexture(*m_clyde->getTexture());
+    m_clyde->getSprite()->setPosition(m_clyde->getX(), m_clyde->getY()); 
 }
 
 void Window::initPacGums() {

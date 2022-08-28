@@ -155,6 +155,12 @@ private:
     Enemy* m_pinky;
 
     /**
+     * @brief clyde ghost
+     * 
+     */
+    Enemy* m_clyde;
+
+    /**
      * @brief vector of sf::Sprites to draw pacgum Sprites
      * 
      */

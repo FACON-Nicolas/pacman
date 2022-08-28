@@ -27,7 +27,7 @@ enum class Target {
     RANDOM,
 
     /**
-     * @brief alternate is a value that switch between PLAYER and RANDOM.
+     * @brief alternate is a value that switch between PLAYER and THE RIGHT BOTTOM CORNER.
      * 
      */
     ALTERNATE
