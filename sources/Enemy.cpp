@@ -118,9 +118,10 @@ void Enemy::reverseDirection() {
     else setCurrentDirection(Direction::STOP);
 }
 
+/*
 bool Enemy::isNearTarget() {
     return (m_target->getNextNode() == getLastNode());
-}
+}*/
 
 std::vector<boost::graph_traits<PGraph>::vertex_descriptor> Enemy::getpathToRightBottomCorner() {
     PVector2Grid corner(GRID_HEIGHT-1, GRID_WIDTH-1);

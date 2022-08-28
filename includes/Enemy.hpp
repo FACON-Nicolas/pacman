@@ -125,14 +125,15 @@ public:
      */
     void setVulnerability();
 
-    /**
-     * @brief check if the target is near of the ghost
-     * 
-     * @return true if the target is near of the ghost
-     * 
-     * @return false if the target is not near of the ghost
-     */
-    bool isNearTarget();
+
+    ///**
+    // * @brief check if the target is near of the ghost
+    // * 
+    // * @return true if the target is near of the ghost
+    // * 
+    // * @return false if the target is not near of the ghost
+    // */
+    //bool isNearTarget();
 
 private:
 
