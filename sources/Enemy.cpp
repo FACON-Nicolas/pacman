@@ -46,10 +46,12 @@ vector<boost::graph_traits<PGraph>::vertex_descriptor> Enemy::getPath() {
                 return getpathToPlayer();
             case Target::NEXT_POS_PLAYER:
                 return getpathToNextPlayerPosition();
+            case Target::ALTERNATE:
+                return (rand() % 2 == 0) ? getpathToPlayer() : getpathToRightBottomCorner();
             default:
                 return getpathToRandom();
         }
-    } else return getpathToRandom();
+    } return getpathToRandom();
 }
 
 Direction Enemy::fromNodesToDirection(int a, int b) {
@@ -69,7 +71,7 @@ vector<Direction> Enemy::transformPathInDirections() {
     for (auto it = path.rbegin(); it != path.rend()-1; it++)
         directions.push_back(fromNodesToDirection(*it, *(it+1)));
     directions.push_back(Direction::STOP);
-    if (getName() == "blinky") directions.erase(directions.begin());
+    if (getName() != "pinky") directions.erase(directions.begin());
     return directions;
 }
 
@@ -114,6 +116,17 @@ void Enemy::reverseDirection() {
     else if (getCurrentDirection() == Direction::TOP) setCurrentDirection(Direction::BOTTOM);
     else if (getCurrentDirection() == Direction::BOTTOM) setCurrentDirection(Direction::TOP);
     else setCurrentDirection(Direction::STOP);
+}
+
+bool Enemy::isNearTarget() {
+    return (m_target->getNextNode() == getLastNode());
+}
+
+std::vector<boost::graph_traits<PGraph>::vertex_descriptor> Enemy::getpathToRightBottomCorner() {
+    PVector2Grid corner(GRID_HEIGHT-1, GRID_WIDTH-1);
+    vector<boost::graph_traits<PGraph>::vertex_descriptor> path;
+    path = getGrid()->dijkstraShortestPaths(getLastNode(), Grid::convertPV2(corner));
+    return path;
 }
 
 void Enemy::update() {

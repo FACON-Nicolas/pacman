@@ -125,6 +125,15 @@ public:
      */
     void setVulnerability();
 
+    /**
+     * @brief check if the target is near of the ghost
+     * 
+     * @return true if the target is near of the ghost
+     * 
+     * @return false if the target is not near of the ghost
+     */
+    bool isNearTarget();
+
 private:
 
     /**
@@ -161,6 +170,13 @@ private:
      * @return std::vector<boost::graph_traits<PGraph>::vertex_descriptor> 
      */
     std::vector<boost::graph_traits<PGraph>::vertex_descriptor> getpathToRandom();
+
+    /**
+     * @brief getPath from ghost to rigth bottom corner position.
+     * 
+     * @return std::vector<boost::graph_traits<PGraph>::vertex_descriptor> 
+     */
+    std::vector<boost::graph_traits<PGraph>::vertex_descriptor> getpathToRightBottomCorner();
 
     /**
      * @brief target value, static because all Enemy have the same target.
