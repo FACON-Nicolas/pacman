@@ -30,7 +30,13 @@ enum class Target {
      * @brief alternate is a value that switch between PLAYER and THE RIGHT BOTTOM CORNER.
      * 
      */
-    ALTERNATE
+    ALTERNATE,
+
+    /**
+     * @brief if a ghost has "corner to corner" as target value, then he'll move from a corner, to another corner.
+     * 
+     */
+    CORNER_TO_CORNER
 
 };
 
