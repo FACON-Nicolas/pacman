@@ -233,9 +233,14 @@ int Grid::getNumberOfNodesInGrid() {
     int nodes = 0;
     for (int i = 0; i < GRID_HEIGHT; i++)
         for (int j = 0; j < GRID_WIDTH; j++)
-            if (isNode(PVector2Grid(i, j)))
+            if (isNode(convertPV2(PVector2Grid(i, j))))
                 nodes++;
     return nodes;
+}
+
+int Grid::getRandomNode() {
+    int index = rand() % m_nodes.size();
+    return m_nodes[index];
 }
 
 vector<int> Grid::getNodesValues() {

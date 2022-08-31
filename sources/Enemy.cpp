@@ -15,8 +15,7 @@ Enemy::~Enemy() {
 }
 
 int Enemy::getRandomNode() {
-    int random = rand() % getGrid()->getNodesValues().size();
-    return getGrid()->getNodesValues()[random];
+    return getGrid()->getRandomNode();
 }
 
 vector<boost::graph_traits<PGraph>::vertex_descriptor> Enemy::getpathToPlayer() {

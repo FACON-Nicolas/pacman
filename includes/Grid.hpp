@@ -218,6 +218,13 @@ public:
      * 
      */
     void decrementPacGumCount() { --m_pacGumCount; }
+
+    /**
+     * @brief Get the Random Node object
+     * 
+     * @return int random node
+     */
+    int getRandomNode(); 
     
 private:
 
