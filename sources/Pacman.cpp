@@ -90,8 +90,8 @@ void Window::initPlayers() {
     Player::setGrid(&m_grid);
     m_pacman = new Human("pacman", 495, 855, NORMAL_SPEED);
     m_blinky = new Enemy("blinky", 6 * CASE_SIZE, 7 * CASE_SIZE, NORMAL_SPEED, Target::PLAYER);
-    m_pinky = new Enemy("pinky", 14*CASE_SIZE, 7*CASE_SIZE, NORMAL_SPEED, Target::NEXT_POS_PLAYER);
-    m_clyde = new Enemy("clyde", 11 * CASE_SIZE, 7*CASE_SIZE, NORMAL_SPEED, Target::ALTERNATE);
+    m_pinky = new Enemy("pinky", 11*CASE_SIZE, 7*CASE_SIZE, NORMAL_SPEED, Target::NEXT_POS_PLAYER);
+    m_clyde = new Enemy("clyde", 14 * CASE_SIZE, 7*CASE_SIZE, NORMAL_SPEED, Target::ALTERNATE);
     Enemy::setTarget(m_pacman);
 }
 

@@ -7,6 +7,10 @@ Enemy::~Enemy() {
     delete m_walkLeftAnim;
     delete m_walkTopAnim;
     delete m_walkRightAnim;
+    delete m_goToBaseBottomAnim;
+    delete m_goToBaseRightAnim;
+    delete m_goToBaseTopAnim;
+    delete m_goToBaseLeftAnim;
     m_enemyCounter--;
     if (m_enemyCounter == 0) {
         m_target = nullptr;
@@ -38,7 +42,14 @@ vector<boost::graph_traits<PGraph>::vertex_descriptor> Enemy::getpathToRandom() 
     return path;
 }
 
+vector<boost::graph_traits<PGraph>::vertex_descriptor> Enemy::getpathToBase() {
+    vector<boost::graph_traits<PGraph>::vertex_descriptor> path;
+    path = getGrid()->dijkstraShortestPaths(getLastNode(), m_startPos);
+    return path;
+}
+
 vector<boost::graph_traits<PGraph>::vertex_descriptor> Enemy::getPath() {
+    if (m_isEaten) return getpathToBase();
     if (!m_isVunerable) {
         switch (m_targetType) {
             case Target::PLAYER:
@@ -51,6 +62,19 @@ vector<boost::graph_traits<PGraph>::vertex_descriptor> Enemy::getPath() {
                 return getpathToRandom();
         }
     } return getpathToRandom();
+}
+
+void Enemy::collideTarget() {
+    if (isCollidingPlayer(*m_target)) {
+        if (!m_isEaten && m_isVunerable) {
+             m_isEaten = true;
+             int lastNode = getLastNode();
+             setX((lastNode % 1000) * CASE_SIZE);
+             setY((lastNode / 1000) * CASE_SIZE);
+             setSpeed(GO_TO_BASE_SPEED);
+             m_path = transformPathInDirections();
+        }
+    }
 }
 
 Direction Enemy::fromNodesToDirection(int a, int b) {
@@ -70,7 +94,7 @@ vector<Direction> Enemy::transformPathInDirections() {
     for (auto it = path.rbegin(); it != path.rend()-1; it++)
         directions.push_back(fromNodesToDirection(*it, *(it+1)));
     directions.push_back(Direction::STOP);
-    if (getName() != "pinky") directions.erase(directions.begin());
+    if (getName() != "pinky" && !m_isEaten) directions.erase(directions.begin());
     return directions;
 }
 
@@ -90,18 +114,38 @@ void Enemy::changeVulnerability() {
         reverseDirection();
         setSpeed(VULNERABILITY_SPEED);
         m_timeStart = chrono::system_clock::now();
-    } else if (time >= 10) {
+    } else if (time >= 15 || (Grid::convertPV2(getGridPosition()) == m_startPos && m_isEaten)) {
         m_isVunerable = false;
         setAnimation();
         setX(getX() - ((int) getX() % NORMAL_SPEED));
         setY(getY() - ((int) getY() % NORMAL_SPEED));
         setSpeed(NORMAL_SPEED);
+        m_isEaten = false;
     }
 }
 
 void Enemy::setAnimation() {
     if (m_target->getLastPacgum() == PacGum::ENERGIZER) changeVulnerability();
-    else if (!m_isVunerable) {
+    else if (m_isEaten) {
+        switch (getCurrentDirection())
+        {
+        case Direction::LEFT:
+            m_currentAnimation = m_goToBaseLeftAnim;
+            break;
+        case Direction::TOP:
+            m_currentAnimation = m_goToBaseTopAnim;
+            break;
+        case Direction::BOTTOM:
+            m_currentAnimation = m_goToBaseBottomAnim;
+            break;
+        case Direction::RIGHT:
+            m_currentAnimation = m_goToBaseRightAnim;
+            break;
+        default:
+            m_currentAnimation = m_goToBaseRightAnim;
+            break;
+        }
+    } else if (!m_isVunerable) {
         if  (getCurrentDirection() == Direction::LEFT) m_currentAnimation = m_walkLeftAnim;
         else if (getCurrentDirection() == Direction::RIGHT) m_currentAnimation = m_walkRightAnim;
         else if (getCurrentDirection() == Direction::TOP) m_currentAnimation = m_walkTopAnim;
@@ -142,6 +186,7 @@ void Enemy::update() {
     setTileValue(getGrid()->get(getGridPosition()));
     m_currentAnimation->update();
     if (m_isVunerable) changeVulnerability();
+    collideTarget();
     setAnimation();
     move();
 }

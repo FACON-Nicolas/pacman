@@ -29,14 +29,20 @@ public:
      */
     Enemy(std::string name, float x, float y, float speed, Target targetType) : Player(name, x, y, speed), m_targetType(targetType) {
         m_enemyCounter++;
+        m_isEaten = false;
+        m_isVunerable = false;
         m_walkLeftAnim = new Animation(2, name, "left");
         m_walkRightAnim = new Animation(2, name, "right");
         m_walkTopAnim = new Animation(2, name, "top");
         m_walkBottomAnim = new Animation(2, name, "bottom");
         m_walkRandomlyAnim = new Animation(2, "AI", "vulnerability");
+        m_goToBaseBottomAnim = new Animation(1, "AI", "eaten_bottom");
+        m_goToBaseRightAnim = new Animation(1, "AI", "eaten_right");
+        m_goToBaseTopAnim = new Animation(1, "AI", "eaten_top");
+        m_goToBaseLeftAnim = new Animation(1, "AI", "eaten_left");
         m_currentAnimation = m_walkRightAnim;
-        m_isVunerable = false;
-        m_startPos = getGridPosition();
+        m_startPos = Grid::convertPV2(getGridPosition());
+        std::cout << getName() << ": " << m_startPos << std::endl;
     }
 
     /**
@@ -125,6 +131,11 @@ public:
      */
     void setVulnerability();
 
+    /**
+     * @brief method called if pacman and this ghost are overlapping.
+     * 
+     */
+    void collideTarget();
 
     ///**
     // * @brief check if the target is near of the ghost
@@ -180,6 +191,13 @@ private:
     std::vector<boost::graph_traits<PGraph>::vertex_descriptor> getpathToRightBottomCorner();
 
     /**
+     * @brief get path from position to base
+     * 
+     * @return std::vector<boost::graph_traits<PGraph>::vertex_descriptor> 
+     */
+    std::vector<boost::graph_traits<PGraph>::vertex_descriptor> getpathToBase();
+
+    /**
      * @brief target value, static because all Enemy have the same target.
      * 
      */
@@ -228,6 +246,30 @@ private:
     Animation* m_walkRandomlyAnim;
 
     /**
+     * @brief go to base left anim
+     * 
+     */
+    Animation* m_goToBaseLeftAnim;
+
+    /**
+     * @brief go to base right anim
+     * 
+     */
+    Animation* m_goToBaseRightAnim;
+
+    /**
+     * @brief go to base top anim
+     * 
+     */
+    Animation* m_goToBaseTopAnim;
+
+    /**
+     * @brief go to base bottom anim
+     * 
+     */
+    Animation* m_goToBaseBottomAnim;
+
+    /**
      * @brief ghost counter, increments in constructor and decrements in destructor.
      * 
      */
@@ -252,10 +294,16 @@ private:
     bool m_isVunerable;
 
     /**
+     * @brief defines if the ghost is eaten by pacman.
+     * 
+     */
+    bool m_isEaten;
+
+    /**
      * @brief start pos in grid.
      * 
      */
-    PVector2Grid m_startPos;
+    int m_startPos;
 
 };
 
