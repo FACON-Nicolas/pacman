@@ -112,7 +112,7 @@ public:
      * 
      * @return float m_x value
      */
-    float getX() const { return m_x; }
+    float getX() const { return (int) m_x % WINDOW_WIDTH; }
 
     /**
      * @brief setter for m_x
@@ -126,7 +126,7 @@ public:
      * 
      * @return float m_y value
      */
-    float getY() const { return m_y; }
+    float getY() const { return (int) m_y % WINDOW_HEIGHT; }
 
     /**
      * @brief setter for m_x
@@ -236,7 +236,7 @@ public:
      * @return PVector2Grid current grid position
      */
     PVector2Grid getGridPosition() const { 
-        PVector2Grid pos(getY()/CASE_SIZE, getX()/CASE_SIZE);
+        PVector2Grid pos((int) getY() / CASE_SIZE, (int) getX() / CASE_SIZE);
         return pos;
     }
 

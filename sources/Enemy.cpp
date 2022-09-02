@@ -183,6 +183,7 @@ void Enemy::update() {
             setDirection();
         }
     }
+    cout << getY() << " " << getGridPosition().first << " " << getGridPosition().second << endl;
     setTileValue(getGrid()->get(getGridPosition()));
     m_currentAnimation->update();
     if (m_isVunerable) changeVulnerability();
