@@ -18,9 +18,11 @@ bool Animation::isPaused() {
 }
 
 void Animation::update() {
+    m_sprite.setTexture(*getTexture());
     if (!isPaused()) {
-        m_sprite.setTexture(*getTexture());
-        m_index = ((m_valueToInc++)/m_dividerUpdate) % m_size;
+        if (m_loop) m_index = ((m_valueToInc++)/m_dividerUpdate) % m_size;
+        else if (m_index < m_textures.size()) m_index++;
+        else pause();
     }
 }
 

@@ -73,6 +73,9 @@ void Enemy::collideTarget() {
              setY((lastNode / 1000) * CASE_SIZE);
              setSpeed(GO_TO_BASE_SPEED);
              m_path = transformPathInDirections();
+        } else {
+            m_target->setCollided(true);
+            m_target->setCurrentAnimation();
         }
     }
 }
@@ -185,9 +188,11 @@ void Enemy::update() {
     }
     cout << getY() << " " << getGridPosition().first << " " << getGridPosition().second << endl;
     setTileValue(getGrid()->get(getGridPosition()));
-    m_currentAnimation->update();
-    if (m_isVunerable) changeVulnerability();
-    collideTarget();
-    setAnimation();
-    move();
+    if (!m_target->isCollided()) {
+        m_currentAnimation->update();
+        if (m_isVunerable) changeVulnerability();
+        collideTarget();
+        setAnimation();
+        move();
+    }
 }

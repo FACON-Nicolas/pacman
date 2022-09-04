@@ -31,7 +31,7 @@ public:
         m_walkRightAnim = new Animation(3, name, "walk_right", true);
         m_walkTopAnim = new Animation(3, name, "walk_top", true);
         m_walkBottomAnim = new Animation(3, name, "walk_bottom", true);
-        m_deathAnim = new Animation(11, name, "death");
+        m_deathAnim = new Animation(11, name, "death", false, false);
         m_currentAnim = m_walkRightAnim;
         setCurrentAnimation();
         setCurrentDirection(Direction::STOP);
@@ -67,6 +67,13 @@ public:
      * @return false if it is not collided
      */
     bool isCollided() const { return m_isCollidingEnemy; }
+
+    /**
+     * @brief Set the Collided object
+     * 
+     * @param collision new collision value
+     */
+    void setCollided(bool collision) { m_isCollidingEnemy = collision; }
 
     /**
      * @brief check if pacman is alive

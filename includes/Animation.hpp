@@ -23,7 +23,7 @@ public:
      * 
      * @param name name of animation
      */
-    Animation(int size, std::string character, std::string name, bool reverse=false) : m_size(size), m_character(character), m_name(name), m_index(0) {
+    Animation(int size, std::string character, std::string name, bool reverse=false, bool loop=true) : m_size(size), m_character(character), m_name(name), m_loop(loop), m_index(0) {
         m_isPaused = false; 
         m_valueToInc = 0;
         for (int i = 1; i <= size; i++) {
@@ -148,6 +148,12 @@ private:
      * 
      */
     int m_valueToInc;
+
+    /**
+     * @brief boolean use to know if the animation should be played infinitely
+     * 
+     */
+    bool m_loop;
     
 };
 

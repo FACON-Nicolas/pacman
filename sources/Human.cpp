@@ -39,18 +39,22 @@ bool Human::isAlive() {
 
 void Human::update() {
 
-    //animation
-    setCurrentAnimation();
 
     //movements
-    move();
+    if (!isCollided()) {
+        setCurrentAnimation();
+        move();
+        //update anim
+        if ((m_currentAnim == m_walkRightAnim || m_currentAnim == m_walkLeftAnim
+        || m_currentAnim == m_walkBottomAnim || m_currentAnim == m_walkTopAnim))
+            if (getCurrentDirection() == Direction::STOP) m_currentAnim->pause();
+            else m_currentAnim->play();
 
-    //update anim
-    if ((m_currentAnim == m_walkRightAnim || m_currentAnim == m_walkLeftAnim
-     || m_currentAnim == m_walkBottomAnim || m_currentAnim == m_walkTopAnim))
-        if (getCurrentDirection() == Direction::STOP) m_currentAnim->pause();
-        else m_currentAnim->play();
+    }
+
     m_currentAnim->update();
+
+    cout << (m_currentAnim == m_deathAnim) << endl;
 
     //tile value
     setTileValue(getGrid()->get(PVector2Grid(getGridPosition())));
