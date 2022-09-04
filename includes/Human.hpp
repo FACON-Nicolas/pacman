@@ -37,6 +37,7 @@ public:
         setCurrentDirection(Direction::STOP);
         setNextDirection(Direction::STOP);
         setLastPacGum(PacGum::EMPTY);
+        m_startPos = Grid::convertPV2(getGridPosition());
     }
 
     sf::Texture* getTexture() const { return m_currentAnim->getTexture(); }
@@ -74,6 +75,15 @@ public:
      * @param collision new collision value
      */
     void setCollided(bool collision) { m_isCollidingEnemy = collision; }
+
+    /**
+     * @brief check if the death is over
+     * 
+     * @return true if the death anim is paused and player is collided 
+     * 
+     * @return false not true
+     */
+    bool deathIsOver() { return m_currentAnim == m_deathAnim && m_currentAnim->isPaused(); }
 
     /**
      * @brief check if pacman is alive
@@ -160,6 +170,12 @@ private:
      * 
      */
     PacGum m_lastPacGum;
+
+    /**
+     * @brief node start pos
+     * 
+     */
+    int m_startPos;
 };
 
 #endif //HUMAN_HPP

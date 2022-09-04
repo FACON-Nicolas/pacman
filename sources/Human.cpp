@@ -39,6 +39,14 @@ bool Human::isAlive() {
 
 void Human::update() {
 
+    if (deathIsOver() && isCollided()) {
+        setCollided(false);
+        PVector2Grid startPos = Grid::convertNode(m_startPos);
+        setX(startPos.second * CASE_SIZE);
+        setY(startPos.first * CASE_SIZE);
+        m_currentAnim->reset();
+        m_deathAnim->play();
+    }
 
     //movements
     if (!isCollided()) {

@@ -73,7 +73,7 @@ void Enemy::collideTarget() {
              setY((lastNode / 1000) * CASE_SIZE);
              setSpeed(GO_TO_BASE_SPEED);
              m_path = transformPathInDirections();
-        } else {
+        } else if (!m_isEaten && !m_isVunerable) {
             m_target->setCollided(true);
             m_target->setCurrentAnimation();
         }
@@ -194,5 +194,11 @@ void Enemy::update() {
         collideTarget();
         setAnimation();
         move();
+    }
+
+    if (m_target->deathIsOver() && m_target->isCollided()) {
+        PVector2Grid startPos = Grid::convertNode(m_startPos);
+        setX(startPos.second * CASE_SIZE);
+        setY(startPos.first * CASE_SIZE);
     }
 }

@@ -93,6 +93,12 @@ public:
      */
     void update();
 
+    /**
+     * @brief reset animation
+     * 
+     */
+    void reset() { m_index = 0; }
+
 private:
 
     /**
