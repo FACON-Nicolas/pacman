@@ -11,8 +11,10 @@ Human::~Human() {
 }
 
 void Human::setCurrentAnimation() {
-    if (isCollided()) setCurrentAnimation(m_deathAnim);
-    else {
+    if (isCollided() && m_currentAnim != m_deathAnim) {
+        setCurrentAnimation(m_deathAnim);
+        m_remainingLives--;
+    } else {
         switch (getCurrentDirection()) {
             case Direction::RIGHT:
                 m_currentAnim = m_walkRightAnim;
@@ -36,16 +38,18 @@ bool Human::isAlive() {
 }
 
 void Human::update() {
-    //movements
-    move();
 
     //animation
     setCurrentAnimation();
 
+    //movements
+    move();
+
     //update anim
-    if (m_currentAnim == m_walkRightAnim && getCurrentDirection() == Direction::STOP) m_currentAnim->pause();
-    else if (m_currentAnim == m_walkRightAnim && m_currentAnim->isPaused() && getCurrentDirection() != Direction::STOP) 
-        m_currentAnim->play();
+    if ((m_currentAnim == m_walkRightAnim || m_currentAnim == m_walkLeftAnim
+     || m_currentAnim == m_walkBottomAnim || m_currentAnim == m_walkTopAnim))
+        if (getCurrentDirection() == Direction::STOP) m_currentAnim->pause();
+        else m_currentAnim->play();
     m_currentAnim->update();
 
     //tile value

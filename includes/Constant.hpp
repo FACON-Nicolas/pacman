@@ -7,10 +7,11 @@
 #define ROW_VALUE               1000
 #define COLUMN_VALUE            1
 
-#define WINDOW_WIDTH            1600
-#define WINDOW_HEIGHT           901
 #define CASE_SIZE               45
 #define FRAME_RATE              60
+
+#define WINDOW_WIDTH            (CASE_SIZE * (GRID_WIDTH + 1))
+#define WINDOW_HEIGHT           (CASE_SIZE * GRID_HEIGHT) + 1
 
 #define NORMAL_SPEED            3
 #define VULNERABILITY_SPEED     1
