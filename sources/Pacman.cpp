@@ -5,6 +5,7 @@ Window::~Window() {
     delete m_pacman;
     delete m_blinky;
     delete m_clyde;
+    delete[] m_pacmanLiveSprites;
 }
 
 void Window::run() {
@@ -43,6 +44,10 @@ void Window::update() {
     draw(*m_blinky->getSprite());
     draw(*m_pinky->getSprite());
     draw(*m_clyde->getSprite());
+
+    for (int i = 0; i < m_pacman->getRemainingLives(); i++)
+        draw(m_pacmanLiveSprites[i]);
+
     display();
 }
 
@@ -89,9 +94,9 @@ void Window::keyboardControls(sf::Keyboard::Key key) {
 void Window::initPlayers() {
     Player::setGrid(&m_grid);
     m_pacman = new Human("pacman", 495, 855, NORMAL_SPEED);
-    m_blinky = new Enemy("blinky", 6 * CASE_SIZE, 7 * CASE_SIZE, NORMAL_SPEED, Target::PLAYER);
+    m_blinky = new Enemy("blinky", (GRID_WIDTH-1) * CASE_SIZE, 0 * CASE_SIZE, NORMAL_SPEED, Target::PLAYER);
     m_pinky = new Enemy("pinky", 11 * CASE_SIZE, 7 * CASE_SIZE, NORMAL_SPEED, Target::NEXT_POS_PLAYER);
-    m_clyde = new Enemy("clyde", 14 * CASE_SIZE, 7 * CASE_SIZE, NORMAL_SPEED, Target::ALTERNATE);
+    m_clyde = new Enemy("clyde", 0 * CASE_SIZE, 0 * CASE_SIZE, NORMAL_SPEED, Target::ALTERNATE);
     Enemy::setTarget(m_pacman);
 }
 

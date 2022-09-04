@@ -46,12 +46,13 @@ void Human::update() {
         setY(startPos.first * CASE_SIZE);
         m_currentAnim->reset();
         m_deathAnim->play();
+        setCurrentDirection(Direction::RIGHT);
     }
 
     //movements
     if (!isCollided()) {
-        setCurrentAnimation();
         move();
+        setCurrentAnimation();
         //update anim
         if ((m_currentAnim == m_walkRightAnim || m_currentAnim == m_walkLeftAnim
         || m_currentAnim == m_walkBottomAnim || m_currentAnim == m_walkTopAnim))

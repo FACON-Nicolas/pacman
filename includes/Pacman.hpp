@@ -30,10 +30,16 @@ public:
      */
     Window(sf::VideoMode video, const sf::String& title) : sf::RenderWindow(video, title) {
         setFramerateLimit(FRAME_RATE);
+        m_pacmanLiveTexture.loadFromFile("images/pacman/walk_right2.png");
         m_pacGumTexture.loadFromFile("images/point.png");
         m_superPacGumTexture.loadFromFile("images/coin.png");
         initGrid();
         initPlayers();
+        m_pacmanLiveSprites = new sf::Sprite[m_pacman->getRemainingLives()];
+        for (int i = 0; i < m_pacman->getRemainingLives(); i++) {
+            m_pacmanLiveSprites[i].setTexture(m_pacmanLiveTexture);
+            m_pacmanLiveSprites[i].setPosition(CASE_SIZE * GRID_WIDTH, CASE_SIZE * i);
+        }
         initPacGums();
         run();
     }
@@ -177,6 +183,10 @@ private:
      * 
      */
     sf::Texture m_superPacGumTexture;
+
+    sf::Texture m_pacmanLiveTexture;
+
+    sf::Sprite* m_pacmanLiveSprites;
 
 };
 

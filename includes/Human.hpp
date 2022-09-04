@@ -94,6 +94,8 @@ public:
      */
     bool isAlive();
 
+    int getRemainingLives() { return m_remainingLives; }
+
     /**
      * @brief Set the Current Animation object
      * 

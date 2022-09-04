@@ -43,6 +43,8 @@ public:
         m_currentAnimation = m_walkRightAnim;
         m_startPos = Grid::convertPV2(getGridPosition());
         std::cout << getName() << ": " << m_startPos << std::endl;
+        setX(getGridPosition().second * CASE_SIZE);
+        setY(getGridPosition().first * CASE_SIZE);
     }
 
     /**
