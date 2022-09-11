@@ -2,7 +2,9 @@
 using namespace std;
 
 bool Player::isCollidingPlayer(Player player) {
-    return abs(player.m_x - m_x) < CASE_SIZE && abs(player.m_y - m_y) < CASE_SIZE;
+    return (abs(player.m_x - m_x) < CASE_SIZE && player.m_y == m_y)
+        || (abs(player.m_y - m_y) < CASE_SIZE && player.m_x == m_x);
+    //return abs(player.m_x - m_x) < CASE_SIZE && abs(player.m_y - m_y) < CASE_SIZE;
 }
 
 Player::~Player() {
