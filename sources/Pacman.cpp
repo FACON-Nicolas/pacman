@@ -11,11 +11,12 @@ Window::~Window() {
 void Window::run() {
     while (isOpen()) {
         event();
-        m_blinky->update();
-        m_pinky->update();
-        m_clyde->update();
-        m_pacman->update();
-        update();
+        if (Enemy::getTarget()->isAlive() && !Player::getGrid()->isEmpty()) {
+            m_blinky->update();
+            m_pinky->update();
+            m_clyde->update();
+            m_pacman->update();
+        } update();
     }
 }
 
@@ -37,15 +38,15 @@ void Window::event() {
 
 void Window::update() {
     clear();
-    drawGrid();
-    updatePlayers();
-    drawPacGums();
-    draw(*m_pacman->getSprite());
-    draw(*m_blinky->getSprite());
-    draw(*m_pinky->getSprite());
-    draw(*m_clyde->getSprite());
-
-    for (int i = 0; i < m_pacman->getRemainingLives(); i++)
+    if (Enemy::getTarget()->isAlive() && !Player::getGrid()->isEmpty()) {
+        drawGrid();
+        updatePlayers();
+        drawPacGums();
+        draw(*m_pacman->getSprite());
+        draw(*m_blinky->getSprite());
+        draw(*m_pinky->getSprite());
+        draw(*m_clyde->getSprite());
+    } for (int i = 0; i < m_pacman->getRemainingLives(); i++)
         draw(m_pacmanLiveSprites[i]);
 
     display();

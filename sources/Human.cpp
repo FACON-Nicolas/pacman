@@ -73,6 +73,7 @@ void Human::update() {
     if (Player::getGrid()->getPacGum(getGridPosition()) != PacGum::EMPTY && isPerfectlyPositionned()) {
         m_lastPacGum = getGrid()->getPacGum(getGridPosition());
         Player::getGrid()->setPacGum(getGridPosition(), PacGum::EMPTY);
+        getGrid()->decrementPacGumCount();
     }
 
     // last node
