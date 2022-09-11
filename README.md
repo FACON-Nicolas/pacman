@@ -2,6 +2,8 @@
 
 This repository is composed by a source code of pacman in C++. the project is currently in development.
 
+![](https://raw.githubusercontent.com/FACON-Nicolas/FACON-Nicolas/main/resources/pacman.gif)
+
 # Summary
 
 * **[Summary](#summary)**
@@ -15,7 +17,6 @@ This repository is composed by a source code of pacman in C++. the project is cu
     * **[Pre-requisites](#pre-requisites)**
     * **[Installation](#installation)**
     * **[Launch](#launch)**
-* **[Releases](#releases)**
 * **[Inputs](#inputs)**
 * **[Versions](#versions)**
 
