@@ -63,8 +63,6 @@ void Human::update() {
 
     m_currentAnim->update();
 
-    cout << (m_currentAnim == m_deathAnim) << endl;
-
     //tile value
     setTileValue(getGrid()->get(PVector2Grid(getGridPosition())));
     if (getLastPacgum() == PacGum::ENERGIZER) setLastPacGum(PacGum::EMPTY);

@@ -212,7 +212,6 @@ public:
      * @return false if there's at least 1 pacgum
      */
     bool isEmpty() { 
-        std::cout << m_pacGumCount << std::endl;
         return m_pacGumCount == 0; 
     }
 

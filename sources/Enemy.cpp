@@ -186,7 +186,6 @@ void Enemy::update() {
             setDirection();
         }
     }
-    cout << getY() << " " << getGridPosition().first << " " << getGridPosition().second << endl;
     setTileValue(getGrid()->get(getGridPosition()));
     if (!m_target->isCollided()) {
         m_currentAnimation->update();

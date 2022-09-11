@@ -50,6 +50,14 @@ public:
      */
     virtual ~Window();
 
+    void reset() {
+        delete m_blinky, m_clyde, m_pinky, m_grid, m_pacman;
+        Enemy::setTarget(nullptr);
+        initGrid();
+        initPlayers();
+        initPacGums();
+    }
+
     /**
      * @brief draw the grid on the screen
      * 
@@ -125,6 +133,12 @@ private:
     void initGrid();
 
     /**
+     * @brief Set the Texts object
+     * 
+     */
+    void setTexts();
+
+    /**
      * @brief texture of grid image
      * 
      */
@@ -140,7 +154,7 @@ private:
      * @brief game grid.
      * 
      */
-    Grid m_grid;
+    Grid* m_grid;
 
     /**
      * @brief human player.
@@ -184,9 +198,29 @@ private:
      */
     sf::Texture m_superPacGumTexture;
 
+    /**
+     * @brief all diffrentes textures to draw remaining pacman lives
+     * 
+     */
     sf::Texture m_pacmanLiveTexture;
 
+    /**
+     * @brief all diffrentes sprites to draw remaining pacman lives
+     * 
+     */
     sf::Sprite* m_pacmanLiveSprites;
+
+    /**
+     * @brief status text: win or game over
+     * 
+     */
+    sf::Text m_statusText;
+
+    /**
+     * @brief restart text, contains keys and actions.
+     * 
+     */
+    sf::Text m_restartText;
 
 };
 

@@ -46,6 +46,10 @@ void Window::update() {
         draw(*m_blinky->getSprite());
         draw(*m_pinky->getSprite());
         draw(*m_clyde->getSprite());
+    } else { 
+        setTexts();
+        draw(m_statusText);
+        draw(m_restartText);
     } for (int i = 0; i < m_pacman->getRemainingLives(); i++)
         draw(m_pacmanLiveSprites[i]);
 
@@ -87,13 +91,20 @@ void Window::keyboardControls(sf::Keyboard::Key key) {
                 m_pacman->setCurrentDirection(Direction::TOP);
             else m_pacman->setNextDirection(Direction::TOP);
         break;
+    case sf::Keyboard::Escape:
+        if (!Enemy::getTarget()->isAlive() || Player::getGrid()->isEmpty()) close();
+        break;
+    case sf::Keyboard::Space:
+        if (!Enemy::getTarget()->isAlive() || Player::getGrid()->isEmpty()) reset();
+        break;
     default:
         break;
     }
 }
 
 void Window::initPlayers() {
-    Player::setGrid(&m_grid);
+    m_grid = new Grid();
+    Player::setGrid(m_grid);
     m_pacman = new Human("pacman", 495, 855, NORMAL_SPEED);
     m_blinky = new Enemy("blinky", (GRID_WIDTH-1) * CASE_SIZE, 0 * CASE_SIZE, NORMAL_SPEED, Target::PLAYER);
     m_pinky = new Enemy("pinky", 11 * CASE_SIZE, 7 * CASE_SIZE, NORMAL_SPEED, Target::NEXT_POS_PLAYER);
@@ -116,12 +127,12 @@ void Window::initPacGums() {
     for (int i = 0; i < GRID_HEIGHT * GRID_WIDTH; i++) {
         int row (i / GRID_WIDTH), column(i % GRID_WIDTH);
         sf::Sprite sprite;
-        if (m_grid.getPacGum(PVector2Grid(row, column)) == PacGum::DOT) sprite.setTexture(m_pacGumTexture);
+        if (m_grid->getPacGum(PVector2Grid(row, column)) == PacGum::DOT) sprite.setTexture(m_pacGumTexture);
         else sprite.setTexture(m_superPacGumTexture);
         float x = CASE_SIZE * column + ((CASE_SIZE/2)); (sprite.getTexture()->getSize().x / 2);
         float y = CASE_SIZE * row + ((CASE_SIZE/2)); + (sprite.getTexture()->getSize().y / 2);
 
-        if (m_grid.getPacGum(PVector2Grid(row, column)) == PacGum::ENERGIZER) {
+        if (m_grid->getPacGum(PVector2Grid(row, column)) == PacGum::ENERGIZER) {
             x -= (sprite.getTexture()->getSize().x / 2);
             y -= (sprite.getTexture()->getSize().y / 2);
         }
@@ -133,8 +144,30 @@ void Window::initPacGums() {
 void Window::drawPacGums() {
     for (int i = 0; i < GRID_HEIGHT * GRID_WIDTH; i++) {
         int row(i / GRID_WIDTH), column(i % GRID_WIDTH);
-        if (m_grid.getPacGum(PVector2Grid(row, column)) != PacGum::EMPTY) draw(m_pacGumSprites[i]);
+        if (m_grid->getPacGum(PVector2Grid(row, column)) != PacGum::EMPTY) draw(m_pacGumSprites[i]);
     }
+}
+
+void Window::setTexts() {
+    sf::Font* font = new sf::Font();
+    font->loadFromFile("arial.ttf");
+    m_statusText.setFont(*font);
+
+    m_statusText.setString(Enemy::getTarget()->isAlive() ? "You Win" : "Game Over");
+    m_statusText.setCharacterSize(60);
+    sf::FloatRect rect = m_statusText.getLocalBounds();
+    m_statusText.setFillColor(sf::Color::White);
+    m_statusText.setPosition((WINDOW_WIDTH - rect.width) / 2, ((WINDOW_HEIGHT - rect.height) / 2 - 150));
+
+    // -----------------------------------------------------------------------------------------------------
+
+    m_restartText.setFont(*font);
+    m_restartText.setString("SPACE to restart\nESCAPE to quit");
+    m_restartText.setCharacterSize(40);
+    sf::FloatRect rect2 = m_restartText.getLocalBounds();
+    m_restartText.setPosition((WINDOW_WIDTH - rect2.width) / 2, m_statusText.getPosition().y + 100);
+    m_restartText.setFillColor(sf::Color::White);
+
 }
 
 int main() {
