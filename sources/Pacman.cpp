@@ -6,6 +6,7 @@ Window::~Window() {
     delete m_blinky;
     delete m_clyde;
     delete[] m_pacmanLiveSprites;
+    delete m_restartText.getFont();
 }
 
 void Window::run() {
@@ -167,7 +168,6 @@ void Window::setTexts() {
     sf::FloatRect rect2 = m_restartText.getLocalBounds();
     m_restartText.setPosition((WINDOW_WIDTH - rect2.width) / 2, m_statusText.getPosition().y + 100);
     m_restartText.setFillColor(sf::Color::White);
-
 }
 
 int main() {
