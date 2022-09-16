@@ -75,6 +75,9 @@ Theses positions are differents for each ghost:
  #install SFML
  sudo apt-get install libsfml-dev
 
+ #install Boost
+ sudo apt-get install libboost-all-dev
+
  ```
 
 ## Installation
