@@ -1,6 +1,6 @@
 # pacman
 
-This repository is composed by a source code of pacman in C++. the project is currently in development.
+This repository is composed by a source code of pacman in C++. the project needs an implementation of A* algorithm, sound FX, and better conception.
 
 ![](https://raw.githubusercontent.com/FACON-Nicolas/FACON-Nicolas/main/resources/pacman.gif)
 
